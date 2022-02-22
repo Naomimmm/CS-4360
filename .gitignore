@@ -10,3 +10,5 @@ local_settings.py
 
 .env
 db.sqlite3
+onestopbooks/bookstore/migrations/0001_initial.py
+onestopbooks/db.sqlite3

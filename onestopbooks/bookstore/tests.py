@@ -86,3 +86,184 @@ class BookTestCase(TestCase):
         
         valid_book = Book.objects.get(isbn="195153448")
         self.assertIsNotNone(valid_book)
+
+class CustomerTestCase(TestCase):
+    def test_valid_customer(self):
+        Customer.objects.create(
+            first_name = "Amy",
+            last_name = "Test",
+            email = "AmyTest@gmail.com",
+            phone_number = "7208884444",
+            address_1 = "123 S. Denver",
+            address_2 = " # 651 ",
+            city = "Denver",
+            state = "Colorado",
+            zip_code = "80123")
+
+        valid_customer = Customer.objects.get(first_name="Amy")
+        self.assertIsNotNone(valid_customer)
+
+    def test_invalid_customer_name_too_long(self):
+        Customer.objects.create(
+            first_name = "AmyAmyAmyAmyAmyAmyAmyAmyAmyAmyAmy",
+            last_name = "Test",
+            email = "AmyTest@gmail.com",
+            phone_number = "7208884444",
+            address_1 = "123 S. Denver",
+            address_2 = " # 651 ",
+            city = "Denver",
+            state = "Colorado",
+            zip_code = "80123")
+
+        try:
+            invalid_customer = Customer.objects.get(first_name = "AmyAmyAmyAmyAmyAmyAmyAmyAmyAmyAmy")
+            invalid_customer.full_clean()
+            invalid_customer.save()
+        except ValidationError:
+            pass
+
+    def test_invalid_customer_last_name_too_long(self):
+        Customer.objects.create(
+            first_name = "Amy",
+            last_name = "Last name is too long. Last name is too long.Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long.",
+            email = "AmyTest@gmail.com",
+            phone_number = "7208884444",
+            address_1 = "123 S. Denver",
+            address_2 = " # 651 ",
+            city = "Denver",
+            state = "Colorado",
+            zip_code = "80123")
+
+        try:
+            invalid_customer = Customer.objects.get(first_name = "Amy")
+            invalid_customer.full_clean()
+            invalid_customer.save()
+        except ValidationError:
+            pass
+
+    def test_invalid_customer_invalid_address_1(self):
+        Customer.objects.create(
+            first_name = "Amy",
+            last_name = "Test",
+            email = "AmyTest@gmail.com",
+            phone_number = "7208884444",
+            address_1 = "Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long.",
+            address_2 = " # 651 ",
+            city = "Denver",
+            state = "Colorado",
+            zip_code = "80123")
+
+        try:
+            invalid_customer = Customer.objects.get(first_name = "Amy")
+            invalid_customer.full_clean()
+            invalid_customer.save()
+        except ValidationError:
+            pass
+
+    def test_invalid_customer_invalid_address_2(self):
+        Customer.objects.create(
+            first_name = "Amy",
+            last_name = "Test",
+            email = "AmyTest@gmail.com",
+            phone_number = "7208884444",
+            address_1 = "123 S. Denver",
+            address_2 = "Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long.",
+            city = "Denver",
+            state = "Colorado",
+            zip_code = "80123")
+
+        try:
+            invalid_customer = Customer.objects.get(first_name = "Amy")
+            invalid_customer.full_clean()
+            invalid_customer.save()
+        except ValidationError:
+            pass
+
+    def test_invalid_customer_invalid_city(self):
+        Customer.objects.create(
+            first_name = "Amy",
+            last_name = "Test",
+            email = "AmyTest@gmail.com",
+            phone_number = "7208884444",
+            address_1 = "123 S. Denver",
+            address_2 = " # 651 ",
+            city = "City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long.",
+            state = "Colorado",
+            zip_code = "80123")
+
+        try:
+            invalid_customer = Customer.objects.get(first_name = "Amy")
+            invalid_customer.full_clean()
+            invalid_customer.save()
+        except ValidationError:
+            pass
+
+    def test_invalid_customer_invalid_state(self):
+        Customer.objects.create(
+            first_name = "Amy",
+            last_name = "Test",
+            email = "AmyTest@gmail.com",
+            phone_number = "7208884444",
+            address_1 = "123 S. Denver",
+            address_2 = " # 651 ",
+            city = "Denver",
+            state = "State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long.",
+            zip_code = "80123")
+
+        try:
+            invalid_customer = Customer.objects.get(first_name = "Amy")
+            invalid_customer.full_clean()
+            invalid_customer.save()
+        except ValidationError:
+            pass
+
+    def test_invalid_customer_invalid_zip_code(self):
+        Customer.objects.create(
+            first_name = "Amy",
+            last_name = "Test",
+            email = "AmyTest@gmail.com",
+            phone_number = "7208884444",
+            address_1 = "123 S. Denver",
+            address_2 = " # 651 ",
+            city = "Denver",
+            state = "Colorado",
+            zip_code = "NoRealZipCode")
+
+        try:
+            invalid_customer = Customer.objects.get(first_name = "Amy")
+            invalid_customer.full_clean()
+            invalid_customer.save()
+        except ValidationError:
+            pass
+
+    def test_invalid_customer_invalid_phone_number(self):
+        with self.assertRaises(ValueError):
+            Customer.objects.create(
+                first_name = "Amy",
+                last_name = "Test",
+                email = "AmyTest@gmail.com",
+                phone_number = "NotRealPhoneNumber",
+                address_1 = "123 S. Denver",
+                address_2 = " # 651 ",
+                city = "Denver",
+                state = "Colorado",
+                zip_code = "80123")
+
+    
+    
+
+
+            
+
+
+    
+
+    
+
+
+
+
+
+
+
+
