@@ -10,10 +10,15 @@ class Book(models.Model):
     publisher = models.CharField(_("publisher"), max_length = 100, null = True)
     thumbnail_pic = models.ImageField(_("thumbnail_pic"), null = True, blank = True, upload_to ="images/")
 
+    def __str__(self):
+        """String for representing the Book title."""
+        return self.title
+
 # Customer Model
 class Customer(models.Model):
-    """A customer model to store basic identifying information for customer end users"""
-    
+    """A customer model to store basic identifying information for customer end users."""
+
+    # Fields
     first_name = models.CharField(max_length = 30)
     last_name = models.CharField(max_length = 30)
     email = models.EmailField()
