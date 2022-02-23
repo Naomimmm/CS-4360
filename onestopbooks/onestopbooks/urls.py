@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from bookstore.views import home_view, aboutus_view, cart_view, books_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home_view, name='home'),
+    path('aboutus/', aboutus_view, name='aboutus'),
+    path('cart/', cart_view, name='cart'),
+    path('books/', books_view, name='books'),
     path('bookstore/', include('bookstore.urls')),
 ]
