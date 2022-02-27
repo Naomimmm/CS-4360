@@ -1,0 +1,65 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block content %}
+<h1>Products Page</h1>
+<div class="products_fours">
+<div class="row">
+	<div class="col-lg-2" style="margin-left: 20px;">
+        <img class="thumbnail" src="{% static 'images/book2.jpg' %}">
+		<div class="box-element-products product">
+            <h6><strong>Product</strong></h6>
+		<hr>
+
+		<button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
+		<a class="btn btn-outline-success" href="#">View</a>
+            <h4 style="display: inline-block; float: right">
+                <strong>$10.99</strong>
+            </h4>
+		</div>
+	</div>
+
+	<div class="col-lg-2" style="margin-left: 125px;">
+        <img class="thumbnail" src="{% static 'images/book2.jpg' %}">
+		<div class="box-element-products product">
+            <h6><strong>Product</strong></h6>
+		<hr>
+
+		<button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
+		<a class="btn btn-outline-success" href="#">View</a>
+            <h4 style="display: inline-block; float: right">
+                <strong>$10.99</strong>
+            </h4>
+		</div>
+	</div>
+    
+    <div class="col-lg-2" style="margin-left: 125px;">
+        <img class="thumbnail" src="{% static 'images/book2.jpg' %}">
+		<div class="box-element-products product">
+            <h6><strong>Product</strong></h6>
+		<hr>
+
+		<button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
+		<a class="btn btn-outline-success" href="#">View</a>
+            <h4 style="display: inline-block; float: right">
+                <strong>$10.99</strong>
+            </h4>
+		</div>
+	</div>
+
+	<div class="col-lg-2" style="margin-left: 125px;">
+        <img class="thumbnail" src="{% static 'images/book2.jpg' %}">
+		<div class="box-element-products product">
+            <h6><strong>Product</strong></h6>
+		<hr>
+
+		<button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
+		<a class="btn btn-outline-success" href="#">View</a>
+            <h4 style="display: inline-block; float: right">
+                <strong>$10.99</strong>
+            </h4>
+		</div>
+	</div>
+</div>
+</div>
+
+{% endblock %}

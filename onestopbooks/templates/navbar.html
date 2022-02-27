@@ -1,0 +1,43 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img  id="cart-icon" src="{% static 'images/OSB_logo.png' %}">
+          OneStop Books</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'books' %}">Books</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cart' %}">Cart</a>
+          </li>
+        </ul>
+        <div class="search-box-form" style="margin: auto;
+        width: 50%;
+        padding: 10px;">
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search by Title, Author, or ISBN" aria-label="Search">
+          <button class="btn btn-danger" type="submit">Search</button>
+        </form>
+        </div>
+        <div>
+            <a href="#"class="btn btn-primary">Login</a>
+            <a href="#"class="btn btn-primary">Sign-Up</a>
+            <a href="{% url 'cart' %}">
+               <img  id="cart-icon" src="{% static 'images/shopping-cart.svg' %}">
+           </a>
+           <p id="cart-count">0</p>
+       </div>
+    </div>
+  </nav>
