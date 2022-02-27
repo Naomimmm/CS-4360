@@ -1,6 +1,6 @@
-from django.views import generic
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views import generic
 
 # Create your views here.
 def home_view(request, *args, **kwargs):
@@ -11,6 +11,9 @@ def books_view(request, *args, **kwargs):
 
 def aboutus_view(request, *args, **kwargs):
     return render(request, "aboutus.html", {})
+
+def checkout_view(request, *args, **kwargs):
+    return render(request, "checkout.html", {})
 
 def cart_view(request, *args, **kwargs):
     return render(request, "cart.html", {})
