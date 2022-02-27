@@ -1,0 +1,88 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+
+<h1>Checkout Page</h1>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="box-element" id="form-wrapper">
+            <form id="form">
+                <div id="user-info">
+                    <p><strong>Customer Information:</strong></p>
+                    <div class="form-field">
+                        <input required class="form-control" type="text" name="first_name" placeholder="First Name..">
+                    </div>
+                    <div class="form-field">
+                        <input required class="form-control" type="email" name="last_name" placeholder="Last Name..">
+                    </div>
+                    <div class="form-field">
+                        <input required class="form-control" type="email" name="email" placeholder="Email..">
+                    </div>
+                    <div class="form-field">
+                        <input required class="form-control" type="email" name="phone_number" placeholder="Phone Number..">
+                    </div>
+                </div>
+                
+                <div id="shipping-info">
+                    <hr>
+                    <p><strong>Shipping Information:</strong></p>
+                    <hr>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="address" placeholder="Address..">
+                    </div>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="city" placeholder="City..">
+                    </div>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="state" placeholder="State..">
+                    </div>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+                    </div>
+                </div>
+                <hr>
+                <div id="shipping-info">
+                    <hr>
+                    <p><strong>Payment Information:</strong></p>
+                    <hr>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="card_name" placeholder="Name on card">
+                    </div>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="card_number" placeholder="card number">
+                    </div>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="card_exp" placeholder="Expiration">
+                    </div>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="card_cvv" placeholder="CVV">
+                    </div>
+                </div>
+                <hr>
+                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+            </form>
+
+        </div>
+        
+    </div>
+
+    <div class="col-lg-6">
+        <div class="box-element">
+            <hr>
+            <h3>Order Summary</h3>
+            <hr>
+            <div class="cart-row">
+                <div style="flex:2"><img class="row-image" src="{% static 'images/placeholder.png' %}"></div>
+                <div style="flex:2"><p>Product 1</p></div>
+                <div style="flex:1"><p>$44.00</p></div>
+                <div style="flex:1"><p>x3</p></div>
+            </div>
+            <h5>Items:   2</h5>
+            <h5>Total:   $59.67</h5>
+            <a  class="btn btn-outline-dark" href="{% url 'cart' %}" style="margin-top: 20px">&#x2190; Back to Cart</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
