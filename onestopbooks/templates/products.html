@@ -1,65 +1,22 @@
 {%extends 'base.html'%}
 {% load static %}
 {% block content %}
-<h1>Products Page</h1>
-<div class="products_fours">
-<div class="row">
-    <div class="col-lg-2" style="margin-left: 20px;">
-        <img class="thumbnail" src="{% static 'images/book2.jpg' %}">
-        <div class="box-element-products product">
-            <h6><strong>Product</strong></h6>
-        <hr>
-
-        <button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
-        <a class="btn btn-outline-success" href="#">View</a>
-            <h4 style="display: inline-block; float: right">
-                <strong>$10.99</strong>
-            </h4>
+<div class="container">
+    <div class="row">
+        {% for book in books %}
+        <div class="col-lg-3 text-center product-box">
+            <img class="thumbnail img-thumbnail center-block" src="{{book.thumbnail_pic.url}}">
+            <br><br>
+            <h6><strong>{{book.title|truncatechars:20}}</strong></h6>
+            <hr>
+            <a class="btn btn-outline-success" href="#">View</a>
+            <br><br>
+            <a class="btn btn-outline-secondary" href="#">Add to Cart</a>
+            <br><br>
+            <h4><strong>$10.99</strong></h4>
         </div>
+        {% endfor %}
     </div>
-
-    <div class="col-lg-2" style="margin-left: 125px;">
-        <img class="thumbnail" src="{% static 'images/book2.jpg' %}">
-        <div class="box-element-products product">
-            <h6><strong>Product</strong></h6>
-        <hr>
-
-        <button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
-        <a class="btn btn-outline-success" href="#">View</a>
-            <h4 style="display: inline-block; float: right">
-                <strong>$10.99</strong>
-            </h4>
-        </div>
-    </div>
-    
-    <div class="col-lg-2" style="margin-left: 125px;">
-        <img class="thumbnail" src="{% static 'images/book2.jpg' %}">
-        <div class="box-element-products product">
-            <h6><strong>Product</strong></h6>
-        <hr>
-
-        <button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
-        <a class="btn btn-outline-success" href="#">View</a>
-            <h4 style="display: inline-block; float: right">
-                <strong>$10.99</strong>
-            </h4>
-        </div>
-    </div>
-
-    <div class="col-lg-2" style="margin-left: 125px;">
-        <img class="thumbnail" src="{% static 'images/book2.jpg' %}">
-        <div class="box-element-products product">
-            <h6><strong>Product</strong></h6>
-        <hr>
-
-        <button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
-        <a class="btn btn-outline-success" href="#">View</a>
-            <h4 style="display: inline-block; float: right">
-                <strong>$10.99</strong>
-            </h4>
-        </div>
-    </div>
-</div>
 </div>
 
 {% endblock %}

@@ -8,7 +8,7 @@ class Book(models.Model):
     authors = models.CharField(_("authors"), max_length = 100)
     year_public = models.IntegerField(_("year_public"), null = True)
     publisher = models.CharField(_("publisher"), max_length = 100, null = True)
-    thumbnail_pic = models.ImageField(_("thumbnail_pic"), null = True, blank = True, upload_to ="images/")
+    thumbnail_pic = models.ImageField(_("thumbnail_pic"), null = True, blank = True, upload_to ="static/images/books")
 
     def __str__(self):
         """String for representing the Book title."""
