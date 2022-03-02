@@ -8,10 +8,10 @@ class Book(models.Model):
     title = models.CharField(_("title"), max_length = 100)
     authors = models.CharField(_("authors"), max_length = 100)
     year_public = models.IntegerField(_("year_public"), null = True)
-    publisher = models.CharField(_("publisher"), max_length = 100, null = True)
-    price = models.IntegerField(_("price"), max_length = 10)
-    quantity = models.IntegerField(_("Quantity"), max_length = 10)  
+    publisher = models.CharField(_("publisher"), max_length = 100, null = True)  
     thumbnail_pic = models.ImageField(_("thumbnail_pic"), null = True, blank = True, upload_to ="static/images/books")
+    price = models.IntegerField(_("price"), max_length = 10)
+    quantity = models.IntegerField(_("Quantity"), max_length = 10)
 
     def __str__(self):
         """String for representing the Book title."""
