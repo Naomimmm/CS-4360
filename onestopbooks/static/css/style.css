@@ -106,10 +106,10 @@ body{
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: rgb(74, 141, 119);
+    background-color: #4b5e88;
     color: white;
     text-align: center;
-    position: relative;
+    position: fixed;
     padding-bottom: 32px; 
     height: 25px;
     margin-top: 20px;

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+<br>
+<head>
+    <link rel = 'stylesheet' href="/static/css/signup.css">
+</head>
+<div class="signup">
+    <form method="POST" action="" >
+        {% csrf_token %}
+        <h1>Register Here</h1
+        {{form.as_p}}
+        {{cust_form.as_p}} 
+       
+        <input class="btn btn-warning" type="submit" value="Register Account">
+    </form>
+</div>
+{% endblock %}
