@@ -1,0 +1,34 @@
+{% load static %}
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center">{{book.title}}</h5>
+        </div>
+        <div class="modal-body text-center">
+          <img class="thumbnail img-thumbnail center-block" src="{{book.thumbnail_pic.url}}">
+          <hr>
+          <h6><strong>isbn:</strong> {{book.isbn}}</h6>
+          <h6><strong>Author(s):</strong>: {{book.authors}}</h6>
+          <h6><strong>Publisher</strong>: {{book.publisher}}</h6>
+          <h6><strong>Year</strong>: {{book.year_public}}</h6>
+          <br>
+          <a class="btn btn-outline-secondary" href="#">Rent</a>
+          <a class="btn btn-outline-secondary" href="#">Purchase</a>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- jquery to hide modal -->
+<script type='text/javascript'>
+    $(document).ready(function(){
+        $("button[data-dismiss='modal']").click(function() {
+            $(".modal").modal("hide");
+        });
+    });
+</script>
