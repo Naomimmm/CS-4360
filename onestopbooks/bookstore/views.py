@@ -60,3 +60,7 @@ def signupPage(request):
 def logoutPage(request):
     logout(request)
     return redirect('/')
+
+def product_view(request, isbn):
+    book = Book.objects.get(isbn = isbn)
+    return render(request, "product.html", {'book': book})

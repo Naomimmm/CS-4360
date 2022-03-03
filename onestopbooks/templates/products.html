@@ -9,14 +9,14 @@
             <br><br>
             <h6><strong>{{book.title|truncatechars:20}}</strong></h6>
             <hr>
-            <a class="btn btn-outline-success" href="#">View</a>
+            <a class="btn btn-outline-success" href="{% url 'product' book.isbn %}">View</a>
             <br><br>
-            <a class="btn btn-outline-secondary" href="#">Add to Cart</a>
+            <a class="btn btn-outline-secondary" href="#">Rent</a>
+            <a class="btn btn-outline-secondary" href="#">Purchase</a>
             <br><br>
-            <h4><strong>$10.99</strong></h4>
+            <h4><strong>${{book.price}}</strong></h4>
         </div>
         {% endfor %}
     </div>
 </div>
-
 {% endblock %}
