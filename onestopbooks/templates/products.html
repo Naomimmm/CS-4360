@@ -9,7 +9,7 @@
             <br><br>
             <h6><strong>{{book.title|truncatechars:20}}</strong></h6>
             <hr>
-            <a class="btn btn-outline-success" data-toggle="modal" data-url="/product/{{book.isbn}}" href="#">View</a>
+            <a class="btn btn-outline-success" data-toggle="modal" data-url="/product/{{book.isbn}}" href="{% url 'product' book.isbn %}">View</a>
             <br><br>
             <a class="btn btn-outline-secondary" href="#">Rent</a>
             <a class="btn btn-outline-secondary" href="#">Purchase</a>
@@ -21,21 +21,4 @@
         <div id="product-modal"></div>
     </div>
 </div>
-
-<!-- jquery to show modal -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type='text/javascript'>
-    $(document).ready(function(){
-        $("a[data-toggle='modal']").click(function() {
-            $.ajax({
-                url: $(this).attr("data-url"),
-                success: function(data) {
-                    $("#product-modal").html(data);
-                    $(".modal").modal("show");
-                }
-            });
-        });
-    });
-</script>
-
 {% endblock %}

@@ -20,6 +20,6 @@ def checkout_view(request, *args, **kwargs):
 def cart_view(request, *args, **kwargs):
     return render(request, "cart.html", {})
 
-def product_modal_view(request, isbn):
+def product_view(request, isbn):
     book = Book.objects.get(isbn = isbn)
-    return render(request, "productmodal.html", {'book': book})
+    return render(request, "product.html", {'book': book})

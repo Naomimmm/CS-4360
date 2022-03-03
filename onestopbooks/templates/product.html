@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block content %}
+<div>
+    <br>
+    <div class="text-center">
+        <h4>{{book.title}}</h4>
+        <br>
+        <img class="thumbnail img-thumbnail center-block" src="{{book.thumbnail_pic.url}}">
+        <hr>
+        <h5>Product Details</h5>
+        <br>
+        <h6><strong>ISBN:</strong> {{book.isbn}}</h6>
+        <h6><strong>Author(s):</strong> {{book.authors}}</h6>
+        <h6><strong>Publisher:</strong> {{book.publisher}}</h6>
+        <h6><strong>Year Published:</strong> {{book.year_public}}</h6>
+        <br>
+        <a class="btn btn-outline-secondary" href="#">Rent</a>
+        <a class="btn btn-outline-secondary" href="#">Purchase</a>
+    </div>
+</div>
+{% endblock %}
