@@ -2,65 +2,48 @@
 {% load static %}
 
 {% block content %}
+<h1 style="text-align: center; color: rgb(0, 0, 0);"><strong>Welcome Book Worms! <br>Your <span style="color: crimson;">OneStop</span> destination for your book needs!</strong></h1>
+<br></br>
+<br></br>
 
-<h1>Home Page</h1>
-
-<div class="row">
-    <div class="col-lg-6">
-		<div class="box-element">
-            <h3>Overview:</h3>
-            <div class="cart-row">
-                
-            </div>
-
-		</div>
-    </div>
-    <br></br>
-
-    <div class="col-lg-6">
-		<div class="box-element">
-            <h3>Picture</h3>
-            <div class="cart-row">
-            
-            </div>
-
-		</div>
-    </div>
+<div class="row" >
+	<div style="box-shadow: 0 0 11px 4px #fff, 0 0 21px 10px rgb(199, 164, 132), 0 0 31px 18px rgb(106, 211, 211); ">
+    <h3 style="font-size: 60px; text-align: center; color: rgb(0, 0, 0);">Want to hear a secret...</h3><br>
+      <p style="font-size: 30px; text-align: center; color: rgb(0, 0, 0)">At OneStop Books we offer a OneStop destination for all your book Essentials!
+        <br>If it's renting a book or purchasing a book then look no further! &#10084;&#65039;
+      </p>
+  </div>
+  <br></br>
 </div>
 <br></br>
 
-<div class="row">
-    <div class="col-lg-2">
-      <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login</a>
-    </div>
-    <div class="col-lg-2">
-      <a href="{% url 'signup' %}" class="btn btn-primary btn-lg">Sign-Up</a>
-    </div>
+<div class="row" style="text-align: center; display: inline; display: block;">
+  <a href="{% url 'login' %}" class="btn btn-primary btn-lg" style="width: 150px;">Login</a>
+  <a href="{% url 'signup' %}" class="btn btn-primary btn-lg" style="width: 150px;">Sign-Up</a>
 </div>
 <br></br>
+<br></br>
+<br></br>
 
-<div class="row">
-	<div class="col-lg-2" style="margin-left: 20px;">
+<div class="row"  style="margin-left: 150px;">
+	<div class="col-lg-4" style="margin-left: 0px;">
 		<div class="box-element">
-            <p>Genre</p>
-        </div>
+      <a style=" display: block; text-align: center; text-decoration: none; color: black; font-weight: bold;" href="{% url 'books' %}">NEWEST BOOKS</a>
+    </div>
 	</div>
-    <div class="col-lg-2" style="margin-left: 20px;">
-		<div class="box-element">
-            <p>Genre</p>
-        </div>
+  <div class="col-lg-4" >
+	  <div class="box-element">
+      <a style="display: block; text-align: center; text-decoration: none; color: black; font-weight: bold;" href="{% url 'books' %}">TOP 20 BOOKS</a>
+    </div>
 	</div>
-    <div class="col-lg-2" style="margin-left: 20px;">
-		<div class="box-element">
-            <p>Genre</p>
-        </div>
+    
+  <div class="col-lg-4">
+	  <div class="box-element">
+      <a style="display: block; text-align: center; text-decoration: none; color: black; font-weight: bold;" href="{% url 'books' %}">RANDOM BOOKS</a>
+    </div>
 	</div>
-    <div class="col-lg-2" style="margin-left: 20px;">
-		<div class="box-element">
-            <p>Genre</p>
-        </div>
-	</div>
+  <br></br>
+  <br></br>
 </div>
-
 
 {% endblock %}
