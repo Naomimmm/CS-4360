@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 # Create your models here.
 class Book(models.Model):
     """ Book model with ISBN, title, authors, year public, price, quantity and thumbnail"""
-    isbn = models.CharField(_("isbn"), max_length = 30)
+    isbn = models.CharField(_("isbn"), max_length = 30, primary_key = True)
     title = models.CharField(_("title"), max_length = 100)
     authors = models.CharField(_("authors"), max_length = 100)
     year_public = models.IntegerField(_("year_public"), null = True)
