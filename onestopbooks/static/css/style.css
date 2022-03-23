@@ -123,6 +123,14 @@ p{
     margin-top: 15px;       
 }
 
+.aboutus .contt{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .hidden{
     display: none!important;
 }
