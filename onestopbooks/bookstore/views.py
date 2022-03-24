@@ -1,3 +1,4 @@
+import random
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
@@ -5,9 +6,32 @@ from django.views import generic
 from bookstore.models import *
 from .forms import *
 
+GENRE_PRODUCTS_HTML = "genre-products.html"
+
 # Create your views here.
 def home_view(request, *args, **kwargs):
     return render(request, "home.html", {})
+
+
+def randombooks_view(request, *args, **kwargs):
+    items = list(Book.objects.all())
+    random_items = random.sample(items, 20)
+
+    return render(request, GENRE_PRODUCTS_HTML, {'books': random_items})
+
+
+def booksunder_view(request, *args, **kwargs):
+    items_under = Book.objects.filter(price__range=(0, 9))
+    items_under_sorted = items_under.order_by('price')
+
+    return render(request, GENRE_PRODUCTS_HTML, {'books': items_under_sorted})
+
+
+def newestbooks_view(request, *args, **kwargs):
+    items_num = len(Book.objects.all())
+    last_twenty = Book.objects.filter().order_by()[items_num-20:]
+
+    return render(request, GENRE_PRODUCTS_HTML, {'books': last_twenty})
 
 
 def books_view(request, *args, **kwargs):

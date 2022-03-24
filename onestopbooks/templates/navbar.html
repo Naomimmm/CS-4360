@@ -8,7 +8,7 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-weight: bold;">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
@@ -27,7 +27,7 @@
         width: 50%;
         padding: 10px;">
         <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search by Title, Author, or ISBN" aria-label="Search">
+          <input class="form-control me-2" type="search" placeholder="Search by Title, Author, or ISBN" aria-label="Search" style="font-weight: bold;">
           <button class="btn btn-danger" type="submit">Search</button>
         </form>
         </div>
@@ -40,6 +40,6 @@
            <p id="cart-count">0</p>
        </div>
     </div>
-    <span class="hello-msg">Hello, {{request.user}}</span>
-    <span ><a href="{% url 'logout' %}"class="btn btn-secondary">Logout</a></span>
+    <span class="hello-msg"style="font-weight: bold;">&nbsp; Hello, {{request.user}} </span>
+    <span >&nbsp;&nbsp;<a href="{% url 'logout' %}"class="btn btn-secondary">Logout</a></span>
   </nav>
