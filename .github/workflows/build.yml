@@ -7,7 +7,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  simple_build:
+  Unit Tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -16,9 +16,6 @@ jobs:
         uses: actions/setup-python@v2
         with:
            python-version: 3.9
-      - name: Install requirements
-        run: |
-            pip install -r requirements.txt
       - name: Run tests
         run: |
             cd src
