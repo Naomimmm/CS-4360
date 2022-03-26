@@ -23,7 +23,7 @@ jobs:
       - name: Run tests
         run: |
             cd onestopbooks
-            python manage.py test
+            coverage run ./manage.py test
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
