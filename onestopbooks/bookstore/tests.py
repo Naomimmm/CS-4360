@@ -12,7 +12,9 @@ class BookTestCase(TestCase):
             authors = "Mark P. O. Morford",
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg")
+            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            quantity = 10,
+            price = 10)
         
         valid_book = Book.objects.get(isbn="195153448")
         self.assertIsNotNone(valid_book)
@@ -24,7 +26,9 @@ class BookTestCase(TestCase):
             authors = "Mark P. O. Morford",
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg")
+            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            quantity = 10,
+            price = 10)
         
         # max_length is not enforced.
         # verifying using full_clean and save, reference: https://stackoverflow.com/questions/8478054/django-model-charfield-max-length-does-not-work
@@ -42,7 +46,9 @@ class BookTestCase(TestCase):
             authors = "Mark P. O. Morford",
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg")
+            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            quantity = 10,
+            price = 10)
         
         # max_length is not enforced.
         # verifying using full_clean and save, reference: https://stackoverflow.com/questions/8478054/django-model-charfield-max-length-does-not-work
@@ -60,7 +66,9 @@ class BookTestCase(TestCase):
             authors = "Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long.",
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg")
+            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            quantity = 10,
+            price = 10)
         
         valid_book = Book.objects.get(isbn="195153448")
         self.assertIsNotNone(valid_book)
@@ -73,7 +81,9 @@ class BookTestCase(TestCase):
                 authors = "Mark P. O. Morford",
                 year_public = "NotRealYear",
                 publisher = "Oxford University Press",
-                thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg")
+                thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+                quantity = 10,
+                price = 10)
 
     def test_invalid_book_publisher_too_long(self):
         Book.objects.create(
@@ -82,7 +92,9 @@ class BookTestCase(TestCase):
             authors = "Mark P. O. Morford",
             year_public = "2002",
             publisher = "Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long.",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg")
+            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            quantity = 10,
+            price = 10)
         
         valid_book = Book.objects.get(isbn="195153448")
         self.assertIsNotNone(valid_book)
@@ -93,9 +105,7 @@ class CustomerTestCase(TestCase):
             first_name = "Amy",
             last_name = "Test",
             email = "AmyTest@gmail.com",
-            phone_number = "7208884444",
             address_1 = "123 S. Denver",
-            address_2 = " # 651 ",
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -108,9 +118,7 @@ class CustomerTestCase(TestCase):
             first_name = "AmyAmyAmyAmyAmyAmyAmyAmyAmyAmyAmy",
             last_name = "Test",
             email = "AmyTest@gmail.com",
-            phone_number = "7208884444",
             address_1 = "123 S. Denver",
-            address_2 = " # 651 ",
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -127,9 +135,7 @@ class CustomerTestCase(TestCase):
             first_name = "Amy",
             last_name = "Last name is too long. Last name is too long.Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long.",
             email = "AmyTest@gmail.com",
-            phone_number = "7208884444",
             address_1 = "123 S. Denver",
-            address_2 = " # 651 ",
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -146,28 +152,7 @@ class CustomerTestCase(TestCase):
             first_name = "Amy",
             last_name = "Test",
             email = "AmyTest@gmail.com",
-            phone_number = "7208884444",
             address_1 = "Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long.",
-            address_2 = " # 651 ",
-            city = "Denver",
-            state = "Colorado",
-            zip_code = "80123")
-
-        try:
-            invalid_customer = Customer.objects.get(first_name = "Amy")
-            invalid_customer.full_clean()
-            invalid_customer.save()
-        except ValidationError:
-            pass
-
-    def test_invalid_customer_invalid_address_2(self):
-        Customer.objects.create(
-            first_name = "Amy",
-            last_name = "Test",
-            email = "AmyTest@gmail.com",
-            phone_number = "7208884444",
-            address_1 = "123 S. Denver",
-            address_2 = "Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long.",
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -184,9 +169,7 @@ class CustomerTestCase(TestCase):
             first_name = "Amy",
             last_name = "Test",
             email = "AmyTest@gmail.com",
-            phone_number = "7208884444",
             address_1 = "123 S. Denver",
-            address_2 = " # 651 ",
             city = "City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long.",
             state = "Colorado",
             zip_code = "80123")
@@ -203,9 +186,7 @@ class CustomerTestCase(TestCase):
             first_name = "Amy",
             last_name = "Test",
             email = "AmyTest@gmail.com",
-            phone_number = "7208884444",
             address_1 = "123 S. Denver",
-            address_2 = " # 651 ",
             city = "Denver",
             state = "State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long.",
             zip_code = "80123")
@@ -222,9 +203,7 @@ class CustomerTestCase(TestCase):
             first_name = "Amy",
             last_name = "Test",
             email = "AmyTest@gmail.com",
-            phone_number = "7208884444",
             address_1 = "123 S. Denver",
-            address_2 = " # 651 ",
             city = "Denver",
             state = "Colorado",
             zip_code = "NoRealZipCode")
@@ -235,19 +214,6 @@ class CustomerTestCase(TestCase):
             invalid_customer.save()
         except ValidationError:
             pass
-
-    def test_invalid_customer_invalid_phone_number(self):
-        with self.assertRaises(ValueError):
-            Customer.objects.create(
-                first_name = "Amy",
-                last_name = "Test",
-                email = "AmyTest@gmail.com",
-                phone_number = "NotRealPhoneNumber",
-                address_1 = "123 S. Denver",
-                address_2 = " # 651 ",
-                city = "Denver",
-                state = "Colorado",
-                zip_code = "80123")
 
     
     
