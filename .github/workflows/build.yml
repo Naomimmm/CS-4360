@@ -23,6 +23,7 @@ jobs:
         run: |
             cd onestopbooks
             coverage run ./manage.py test
+            coverage xml
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
