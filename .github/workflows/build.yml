@@ -19,7 +19,7 @@ jobs:
            python-version: 3.9
       - name: Run tests
         run: |
-            cd src
+            cd onestopbooks
             python manage.py test
   sonarcloud:
     name: SonarCloud
