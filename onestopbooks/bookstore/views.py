@@ -119,6 +119,7 @@ def product_view(request, isbn):
     book = Book.objects.get(isbn = isbn)
     return render(request, "product.html", {'book': book})
 
+
 def update_item(request):
     data = json.loads(request.body)
     book_isbn = data['bookIsbn']
