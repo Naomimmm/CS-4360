@@ -99,6 +99,20 @@ class BookTestCase(TestCase):
         valid_book = Book.objects.get(isbn="195153448")
         self.assertIsNotNone(valid_book)
 
+    def test_book_to_string(self):
+        Book.objects.create(
+            isbn = "195153448",
+            title = "Classical Mythology",
+            authors = "Mark P. O. Morford",
+            year_public = "2002",
+            publisher = "Oxford University Press",
+            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            quantity = 10,
+            price = 10)
+        
+        valid_book = Book.objects.get(isbn="195153448")
+        self.assertEqual(str(valid_book), "Classical Mythology")
+
 class CustomerTestCase(TestCase):
     def test_valid_customer(self):
         Customer.objects.create(
@@ -215,6 +229,61 @@ class CustomerTestCase(TestCase):
         except ValidationError:
             pass
 
+class ViewsTestCase(TestCase):
+    def test_home_view(self):
+        response = self.client.get('')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'home.html')
+
+    def test_books_view(self):
+        response = self.client.get('/books/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'products.html')
+        
+    def test_aboutus_view(self):
+        response = self.client.get('/aboutus/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'aboutus.html')
+
+    def test_checkout_view(self):
+        response = self.client.get('/checkout/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'checkout.html')
+
+    def test_cart_view(self):
+        response = self.client.get('/cart/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'cart.html')
+
+    def test_loginPage(self):
+        response = self.client.get('/login/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'login.html')
+
+    def test_signupPage(self):
+        response = self.client.get('/signup/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'signup.html')
+
+    def test_logoutPage(self):
+        response = self.client.get('/logout/')
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/')
+
+    def test_product_view_valid_book(self):
+        Book.objects.create(
+            isbn = "195153448",
+            title = "Classical Mythology",
+            authors = "Mark P. O. Morford",
+            year_public = "2002",
+            publisher = "Oxford University Press",
+            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            quantity = 10,
+            price = 10)
+
+        response = self.client.get('/product/195153448')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'product.html')
     
     
 

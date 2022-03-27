@@ -86,4 +86,3 @@ def logoutPage(request):
 def product_view(request, isbn):
     book = Book.objects.get(isbn = isbn)
     return render(request, "product.html", {'book': book})
-
