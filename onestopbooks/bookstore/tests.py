@@ -377,7 +377,7 @@ class OrderTestCase(TestCase):
         self.assertEqual(order.get_cart_items, 0)
 
 class OrderItemCase(TestCase):
-    def test_valid_order_item(self):
+    def setUp(self):
         Book.objects.create(
             isbn = "195153448",
             title = "Classical Mythology",
@@ -388,7 +388,7 @@ class OrderItemCase(TestCase):
             quantity = 10,
             price = 10)
 
-        test_book = Book.objects.get(isbn="195153448")
+        self.test_book = Book.objects.get(isbn="195153448")
         
         Customer.objects.create(
             first_name = "Amy",
@@ -399,17 +399,18 @@ class OrderItemCase(TestCase):
             state = "Colorado",
             zip_code = "80123")
 
-        test_customer = Customer.objects.get(first_name="Amy")
-
+        self.test_customer = Customer.objects.get(first_name="Amy")
+        
+    def test_valid_order_item(self):
         Order.objects.create(
-            customer = test_customer,
+            customer = self.test_customer,
             complete = "False",
             transaction_id = "1")
 
-        test_order = Order.objects.get(customer=test_customer)
+        test_order = Order.objects.get(customer=self.test_customer)
 
         OrderItem.objects.create(
-            product = test_book,
+            product = self.test_book,
             order = test_order,
             quantity = 1)
 
@@ -418,119 +419,50 @@ class OrderItemCase(TestCase):
         self.assertIsNotNone(valid_order_item)
 
     def test_invalid_order_item_invalid_product(self):
-        Customer.objects.create(
-            first_name = "Amy",
-            last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
-            city = "Denver",
-            state = "Colorado",
-            zip_code = "80123")
-
-        test_customer = Customer.objects.get(first_name="Amy")
-
         Order.objects.create(
-            customer = test_customer,
+            customer = self.test_customer,
             complete = "False",
             transaction_id = "1")
 
-        test_order = Order.objects.get(customer=test_customer)
+        test_order = Order.objects.get(customer=self.test_customer)
 
         with self.assertRaises(ValueError):
             OrderItem.objects.create(
-                product = test_customer,
+                product = self.test_customer,
                 order = test_order,
                 quantity = 1)
 
     def test_invalid_order_item_invalid_order(self):
-        Book.objects.create(
-            isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
-            year_public = "2002",
-            publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
-            quantity = 10,
-            price = 10)
-
-        test_book = Book.objects.get(isbn="195153448")
-
         with self.assertRaises(ValueError):
             OrderItem.objects.create(
-                product = test_book,
-                order = test_book,
+                product = self.test_book,
+                order = self.test_book,
                 quantity = 1)
 
     def test_invalid_order_item_invalid_quantity(self):
-        Book.objects.create(
-            isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
-            year_public = "2002",
-            publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
-            quantity = 10,
-            price = 10)
-
-        test_book = Book.objects.get(isbn="195153448")
-        
-        Customer.objects.create(
-            first_name = "Amy",
-            last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
-            city = "Denver",
-            state = "Colorado",
-            zip_code = "80123")
-
-        test_customer = Customer.objects.get(first_name="Amy")
-
         Order.objects.create(
-            customer = test_customer,
+            customer = self.test_customer,
             complete = "False",
             transaction_id = "1")
 
-        test_order = Order.objects.get(customer=test_customer)
+        test_order = Order.objects.get(customer=self.test_customer)
 
         with self.assertRaises(ValueError):
             OrderItem.objects.create(
-                product = test_book,
+                product = self.test_book,
                 order = test_order,
                 quantity = "not a number")
 
     def test_order_item_get_total(self):
-        Book.objects.create(
-            isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
-            year_public = "2002",
-            publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
-            quantity = 10,
-            price = 10)
-
-        test_book = Book.objects.get(isbn="195153448")
-        
-        Customer.objects.create(
-            first_name = "Amy",
-            last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
-            city = "Denver",
-            state = "Colorado",
-            zip_code = "80123")
-
-        test_customer = Customer.objects.get(first_name="Amy")
-
         Order.objects.create(
-            customer = test_customer,
+            customer = self.test_customer,
             complete = "False",
             transaction_id = "1")
 
-        test_order = Order.objects.get(customer=test_customer)
+        test_order = Order.objects.get(customer=self.test_customer)
 
         OrderItem.objects.create(
-            product = test_book,
+            product = self.test_book,
             order = test_order,
             quantity = 1)
 
@@ -539,7 +471,7 @@ class OrderItemCase(TestCase):
         self.assertEqual(order_item.get_total, 10)
 
 class RentItemCase(TestCase):
-    def test_valid_rent_item(self):
+    def setUp(self):
         Book.objects.create(
             isbn = "195153448",
             title = "Classical Mythology",
@@ -550,7 +482,7 @@ class RentItemCase(TestCase):
             quantity = 10,
             price = 10)
 
-        test_book = Book.objects.get(isbn="195153448")
+        self.test_book = Book.objects.get(isbn="195153448")
         
         Customer.objects.create(
             first_name = "Amy",
@@ -561,103 +493,44 @@ class RentItemCase(TestCase):
             state = "Colorado",
             zip_code = "80123")
 
-        test_customer = Customer.objects.get(first_name="Amy")
+        self.test_customer = Customer.objects.get(first_name="Amy")
 
         Order.objects.create(
-            customer = test_customer,
+            customer = self.test_customer,
             complete = "False",
             transaction_id = "1")
 
-        test_order = Order.objects.get(customer=test_customer)
+        self.test_order = Order.objects.get(customer=self.test_customer)
 
+    def test_valid_rent_item(self):
         RentItem.objects.create(
-            product1 = test_book,
-            order1 = test_order,
+            product1 = self.test_book,
+            order1 = self.test_order,
             quantity1 = 1)
 
-        valid_rent_item = RentItem.objects.get(order1=test_order)
+        valid_rent_item = RentItem.objects.get(order1=self.test_order)
 
         self.assertIsNotNone(valid_rent_item)
 
     def test_invalid_rent_item_invalid_product(self):
-        Customer.objects.create(
-            first_name = "Amy",
-            last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
-            city = "Denver",
-            state = "Colorado",
-            zip_code = "80123")
-
-        test_customer = Customer.objects.get(first_name="Amy")
-
-        Order.objects.create(
-            customer = test_customer,
-            complete = "False",
-            transaction_id = "1")
-
-        test_order = Order.objects.get(customer=test_customer)
-
         with self.assertRaises(ValueError):
             RentItem.objects.create(
-                product1 = test_customer,
-                order1 = test_order,
+                product1 = self.test_customer,
+                order1 = self.test_order,
                 quantity1 = 1)
 
     def test_invalid_rent_item_invalid_order(self):
-        Book.objects.create(
-            isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
-            year_public = "2002",
-            publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
-            quantity = 10,
-            price = 10)
-
-        test_book = Book.objects.get(isbn="195153448")
-
         with self.assertRaises(ValueError):
             RentItem.objects.create(
-                product1 = test_book,
-                order1 = test_book,
+                product1 = self.test_book,
+                order1 = self.test_book,
                 quantity1 = 1)
 
     def test_invalid_rent_item_invalid_quantity(self):
-        Book.objects.create(
-            isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
-            year_public = "2002",
-            publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
-            quantity = 10,
-            price = 10)
-
-        test_book = Book.objects.get(isbn="195153448")
-        
-        Customer.objects.create(
-            first_name = "Amy",
-            last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
-            city = "Denver",
-            state = "Colorado",
-            zip_code = "80123")
-
-        test_customer = Customer.objects.get(first_name="Amy")
-
-        Order.objects.create(
-            customer = test_customer,
-            complete = "False",
-            transaction_id = "1")
-
-        test_order = Order.objects.get(customer=test_customer)
-
         with self.assertRaises(ValueError):
             RentItem.objects.create(
-                product1 = test_book,
-                order1 = test_order,
+                product1 = self.test_book,
+                order1 = self.test_order,
                 quantity1 = "not a number")
 
 class ViewsTestCase(TestCase):
