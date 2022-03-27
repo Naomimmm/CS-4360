@@ -112,26 +112,6 @@ def signupPage(request):
             'cust_form':cust_form,
         }
         return render(request,'signup.html',context)
-    # if request.user.is_authenticated:
-    #     return redirect('home')
-    # else:
-    #     form = CreateUserForm()
-    #     if request.method == 'POST':
-    #         form = CreateUserForm(request.POST)
-    #         if form.is_valid():
-    #             user = form.save()
-    #             #username = form.cleaned_data.get('username')
-                
-    #             Customer.objects.create(
-    #                 user=user,
-    #                 #name=user.username,
-    #             )
-    #             #messages.success(request, f'Account created for {username}!')
-    #             return redirect('login')
-    #     # else:
-    #     #     form = UserRegisterForm()
-    # context = {'form':form}
-    # return render(request, 'signup.html', context)
 
 
 def logoutPage(request):

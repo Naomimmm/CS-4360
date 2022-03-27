@@ -17,19 +17,6 @@ class Book(models.Model):
     def __str__(self):
         """String for representing the Book title."""
         return self.title
-    
-    # @property
-    # def updateInventory(self):
-    #     """ To decrease item quantity after checkout """
-    #     orderitems = Order.orderitem_set.all()
-    #     rentitems = Order.rentitem_set.all()
-    #     totalbuy = sum([item.quantity for item in orderitems])
-    #     totalrent = sum([item.quantity1 for item in rentitems])
-    #     total = totalbuy + totalrent
-    #     return total
-    
-    # def remaining_stock(self):
-    #     return self.quantity - Order.get_cart_total
         
 
 # Customer Model
