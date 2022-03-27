@@ -10,12 +10,13 @@
         <hr>
         <h5>Product Details</h5>
         <br>
-        <h6><strong>description</strong> description</h6>
-        <h6><strong>price</strong> {{book.price}}</h6>
+
+        <h6><strong>Description:</strong> {{book.description}}</h6>
         <h6><strong>ISBN:</strong> {{book.isbn}}</h6>
         <h6><strong>Author(s):</strong> {{book.authors}}</h6>
         <h6><strong>Publisher:</strong> {{book.publisher}}</h6>
         <h6><strong>Year Published:</strong> {{book.year_public}}</h6>
+        <h6><strong>Price:</strong> ${{book.price}}</h6>
         <br>
         <a data-product={{book.isbn}} data-action="rent" class="btn btn-outline-secondary add-btn update-cart">Rent</a>
         <a data-product={{book.isbn}} data-action='purchase' class="btn btn-outline-secondary add-btn update-cart">Purchase</a>
