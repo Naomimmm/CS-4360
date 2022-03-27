@@ -27,8 +27,8 @@
             <hr>
             <a class="btn btn-success" href="{% url 'product' book.isbn %}" style="font-weight: bolder;">View</a>
             <br><br>
-            <a class="btn btn-secondary" href="#" style="font-weight: bold;">Rent</a>
-            <a class="btn btn-secondary" href="#" style="font-weight: bold;">Purchase</a>
+            <a data-product={{book.isbn}} data-action="rent" class="btn btn-secondary add-btn update-cart" style="font-weight: bold;">Rent</a>
+            <a data-product={{book.isbn}} data-action='purchase' class="btn btn-secondary add-btn update-cart" style="font-weight: bold;">Purchase</a>
             <br><br>
             <h4><strong>${{book.price}}</strong></h4>
         </div>
