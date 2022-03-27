@@ -6,8 +6,6 @@ from bookstore.models import *
 from .forms import *
 from django.http import JsonResponse
 import json
-from django.forms import inlineformset_factory
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 # Create your views here.
 def home_view(request, *args, **kwargs):
@@ -42,15 +40,13 @@ def checkout_view(request, *args, **kwargs):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
-        #rent, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
         items = order.orderitem_set.all() # this is for purchase
         rents = order.rentitem_set.all() # this is for rent
     else: # for user that isnt log in
         items = [] # empty for now
         rents = []
         order = {'get_cart_total':0, 'get_cart_items':0}
-        # rent = {'get_cart_total':0, 'get_cart_items':0}
-    context = {'items':items, 'rents':rents, 'order':order} # 'order':order}       #'rents':rents, 'rent':rent
+    context = {'items':items, 'rents':rents, 'order':order}
     
     return render(request, "checkout.html", context)
 
@@ -132,10 +128,8 @@ def updateItem(request):
     print('bookIsbn:', bookIsbn)
     
     customer = request.user.customer
-    #product = Book.objects.get(isbn=bookIsbn)
     product1 = Book.objects.get(isbn=bookIsbn)
     order1, created = Order.objects.get_or_create(customer=customer, complete=False)    
-    #order2, created = Order.objects.get_or_create(customer)
     
     rentItem, created = RentItem.objects.get_or_create(order1 = order1, product1=product1)
     orderItem, created = OrderItem.objects.get_or_create(order = order1, product=product1)
@@ -163,4 +157,3 @@ def updateItem(request):
     if rentItem.quantity1 <= 0:
         rentItem.delete()
     return JsonResponse('Item was added', safe=False)
-

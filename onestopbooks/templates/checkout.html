@@ -86,7 +86,7 @@
             </div>
             {% for item in items %}
             <div class="cart-row">
-                <div style="flex:2"><img class="row-image" src="{{item.product.thumbnail_pic.url}}"></div>
+                <div style="flex:2"><img class="row-image" alt="Image of Book cover for Purchase cart" src="{{item.product.thumbnail_pic.url}}"></div>
                 <div style="flex:2"><p>{{item.product.title}}</p></div>
                 <div style="flex:2"><p>{{item.product.price}}</p></div>
                 <div style="flex:1"><p>{{item.quantity}}</p></div>
@@ -96,7 +96,7 @@
             <hr>
             {% for rent in rents %}
             <div class="cart-row">
-                <div style="flex:2"><img class="row-image" src="{{rent.product1.thumbnail_pic.url}}"></div>
+                <div style="flex:2"><img class="row-image" alt="Image of Book cover for Rent Cart" src="{{rent.product1.thumbnail_pic.url}}"></div>
                 <div style="flex:2"><p>{{rent.product1.title}}</p></div>
                 <div style="flex:2"><p>{{rent.product1.price}} or $0 if return on time</p></div>
                 <div style="flex:1"><p>{{rent.quantity1}}</p></div>

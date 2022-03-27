@@ -18,14 +18,14 @@
 
             {% for item in items %}
             <div class="cart-row">
-                <div style="flex:2"><img class="row-image" src="{{item.product.thumbnail_pic.url}}"></div>
+                <div style="flex:2"><img class="row-image" alt="Image of the book" src="{{item.product.thumbnail_pic.url}}"></div>
                 <div style="flex:2"><p>{{item.product.title}}</p></div>
                 <div style="flex:1"><p>{{item.product.price|floatformat:2}}</p></div>
                 <div style="flex:1">
                     <p class="quantity">{{item.quantity}}</p>
                     <div class="quantity">
-                        <img data-product={{item.product.isbn}} data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-circle-up-f.svg' %}">
-                        <img data-product={{item.product.isbn}} data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-circle-down.svg' %}">
+                        <img data-product={{item.product.isbn}} data-action="add" class="chg-quantity update-cart" alt="Image for arrow up increase quantity" src="{% static  'images/arrow-circle-up-f.svg' %}">
+                        <img data-product={{item.product.isbn}} data-action="remove" class="chg-quantity update-cart" alt="Image for arrow down decrease quantity" src="{% static  'images/arrow-circle-down.svg' %}">
                     </div>
                 </div>
                 <div style="flex:2"><p>${{item.get_total}}</p></div>
@@ -48,7 +48,7 @@
             
             {% for rent in rents %}
             <div class="cart-row">
-                <div style="flex:2"><img class="row-image" src="{{rent.product1.thumbnail_pic.url}}"></div>
+                <div style="flex:2"><img class="row-image" alt="Image of Book Cover for rent" src="{{rent.product1.thumbnail_pic.url}}"></div>
                 <div style="flex:2"><p>{{rent.product1.title}}</p></div>
                 <div style="flex:1"><p>{{rent.quantity1}}</p></div>
                 <div style="flex:2"><p>{{rent.date_due1}}</p></div>

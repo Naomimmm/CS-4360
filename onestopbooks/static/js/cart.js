@@ -42,4 +42,4 @@ function updateUserOrder(bookIsbn, action){
         console.log('data:', data)
         location.reload()
     })
-}s
+}
