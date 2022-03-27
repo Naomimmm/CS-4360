@@ -30,5 +30,5 @@ urlpatterns = [
     path('signup/', signupPage, name='signup'),
     path('logout/', logoutPage,name='logout'),
     path('product/<str:isbn>', product_view, name='product'),
-    path('update_item', updateItem, name='update_item'),
+    path('update_item', update_item, name='update_item'),
 ]

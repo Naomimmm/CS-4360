@@ -119,41 +119,41 @@ def product_view(request, isbn):
     book = Book.objects.get(isbn = isbn)
     return render(request, "product.html", {'book': book})
 
-def updateItem(request):
+def update_item(request):
     data = json.loads(request.body)
-    bookIsbn = data['bookIsbn']
+    book_isbn = data['bookIsbn']
     action = data['action']
     # print out action and isbn in command prompt just to test
     print('Action:', action)
-    print('bookIsbn:', bookIsbn)
+    print('bookIsbn:', book_isbn)
     
     customer = request.user.customer
-    product1 = Book.objects.get(isbn=bookIsbn)
+    product1 = Book.objects.get(isbn=book_isbn)
     order1, created = Order.objects.get_or_create(customer=customer, complete=False)    
     
-    rentItem, created = RentItem.objects.get_or_create(order1 = order1, product1=product1)
-    orderItem, created = OrderItem.objects.get_or_create(order = order1, product=product1)
+    rent_item, created = RentItem.objects.get_or_create(order1 = order1, product1=product1)
+    order_item, created = OrderItem.objects.get_or_create(order = order1, product=product1)
     
     if action == 'purchase':
-        orderItem.quantity = (orderItem.quantity + 1)
+        order_item.quantity = (order_item.quantity + 1)
     if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)    
+        order_item.quantity = (order_item.quantity + 1)    
     elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)    
-    orderItem.save()
+       order_item.quantity = (order_item.quantity - 1)    
+    order_item.save()
     
     if action =='rent':
-        rentItem.quantity1 = (rentItem.quantity1 + 1)
-    rentItem.save()
+        rent_item.quantity1 = (rent_item.quantity1 + 1)
+    rent_item.save()
     
     
     if action =='delete':
-        orderItem.delete() 
-    if orderItem.quantity <= 0:
-        orderItem.delete()
+        order_item.delete() 
+    if order_item.quantity <= 0:
+        order_item.delete()
           
     if action =='deleteRent':
-        rentItem.delete()    
-    if rentItem.quantity1 <= 0:
-        rentItem.delete()
+        rent_item.delete()    
+    if rent_item.quantity1 <= 0:
+        rent_item.delete()
     return JsonResponse('Item was added', safe=False)
