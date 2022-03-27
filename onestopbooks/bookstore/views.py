@@ -14,7 +14,6 @@ GENRE_PRODUCTS_HTML = "genre-products.html"
 def home_view(request, *args, **kwargs):
     return render(request, "home.html", {})
 
-
 def randombooks_view(request, *args, **kwargs):
     items = list(Book.objects.all())
     random_items = random.sample(items, 20)
@@ -35,7 +34,6 @@ def newestbooks_view(request, *args, **kwargs):
 
     return render(request, GENRE_PRODUCTS_HTML, {'books': last_twenty})
 
-
 def books_view(request, *args, **kwargs):
     results = request.POST.get('book-filterd')
     
@@ -54,10 +52,8 @@ def books_view(request, *args, **kwargs):
 
     return render(request, "products.html", {'books': books})
 
-
 def aboutus_view(request, *args, **kwargs):
     return render(request, "aboutus.html", {})
-
 
 def checkout_view(request, *args, **kwargs):
     # check if user is authenticated
@@ -73,7 +69,6 @@ def checkout_view(request, *args, **kwargs):
     context = {'items':items, 'rents':rents, 'order':order}
     
     return render(request, "checkout.html", context)
-
 
 def cart_view(request, *args, **kwargs):
     # check if user is authenticated
@@ -92,8 +87,6 @@ def cart_view(request, *args, **kwargs):
     context = {'items':items, 'rents':rents, 'buy':buy, 'rent':rent}
     return render(request, "cart.html", context)
     
-
-
 def loginPage(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -110,7 +103,6 @@ def loginPage(request):
             
        context={}
        return render(request,'login.html',context)
-
 
 def signupPage(request):
     if request.user.is_authenticated:
@@ -133,16 +125,13 @@ def signupPage(request):
         }
         return render(request,'signup.html',context)
 
-
 def logoutPage(request):
     logout(request)
     return redirect('/')
 
-
 def product_view(request, isbn):
     book = Book.objects.get(isbn = isbn)
     return render(request, "product.html", {'book': book})
-
 
 def update_item(request):
     data = json.loads(request.body)

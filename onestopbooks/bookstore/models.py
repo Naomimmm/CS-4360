@@ -18,7 +18,6 @@ class Book(models.Model):
         """String for representing the Book title."""
         return self.title
         
-
 # Customer Model
 class Customer(models.Model):
     """A customer model to store basic identifying information for customer end users."""
@@ -61,6 +60,7 @@ class Order(models.Model):
         totalrent = sum([item.quantity1 for item in rentitems])
         total = totalbuy + totalrent
         return total
+
 class OrderItem(models.Model):
     """ Cart can have multiple item thats why we use foregnkey relationship """
     product = models.ForeignKey(Book, on_delete=models.SET_NULL, blank=True, null=True)
