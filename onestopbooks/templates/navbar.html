@@ -26,8 +26,9 @@
         <div class="search-box-form" style="margin: auto;
         width: 50%;
         padding: 10px;">
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search by Title, Author, or ISBN" aria-label="Search" style="font-weight: bold;">
+        <form class="d-flex"  method=POST action="{% url 'search' %}" >
+          {% csrf_token %}
+          <input class="form-control me-2" type="search" placeholder="Search by Title, Author, or ISBN" aria-label="Search" style="font-weight: bold;" name="searched">
           <button class="btn btn-danger" type="submit">Search</button>
         </form>
         </div>
