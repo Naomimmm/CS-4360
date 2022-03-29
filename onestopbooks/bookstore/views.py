@@ -172,3 +172,11 @@ def update_item(request):
     if rent_item.quantity1 <= 0:
         rent_item.delete()
     return JsonResponse('Item was added', safe=False)
+
+def search_results(request):
+    if request.method == "POST":
+        results = request.POST['searched']
+        books = Book.objects.filter(title__contains =  results)
+        return render(request, "search.html", {'books': books})
+    else:
+        return render(request, "search.html", {})

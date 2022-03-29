@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block content %}
+<div class="container">
+    <br>
+    <h2 style="font-size: 50px;">Search Results: ({{ books.count }})
+        <div style="display: inline-block; float: right; font-size: 35px;">
+            <form action="{% url 'books' %}" method="POST">{% csrf_token %}
+                <label for="book-filterd">Filter:</label>
+                <select name="book-filterd" id="book-filterd">
+                    <option disabled = "true" selected>Select...</option>
+                    <option value="titles_az">Titles: A-Z</option>
+                    <option value="authors_az">Authors: A-Z</option>
+                    <option value="price_lh">Price: Lowest-Highest</option>
+                    <option value="price_hl">Price: Highest-Lowest</option>
+                </select>
+                <input type="submit" value="Submit" /> 
+            </form> 
+        </div>
+    </h2>
+    <div class="row">
+        {% for book in books %}
+        <div class="col-lg-3 text-center product-box">
+            <img class="thumbnail img-thumbnail center-block" src="{{book.thumbnail_pic.url}}">
+            <br><br>
+            <h6 style="font-size: 28px;"><strong>{{book.title|truncatechars:20}}</strong></h6>
+            <hr>
+            <a class="btn btn-info" href="{% url 'product' book.isbn %}" style="font-weight: bolder;">View</a>
+            <br><br>
+            <a data-product={{book.isbn}} data-action="rent" class="btn btn-success add-btn update-cart" style="font-weight: bold;">Rent</a>
+            <a data-product={{book.isbn}} data-action='purchase' class="btn btn-success add-btn update-cart" style="font-weight: bold;">Purchase</a>
+            <br><br>
+            <h4><strong>${{book.price}}</strong></h4>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
