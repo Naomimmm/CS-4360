@@ -31,9 +31,9 @@
             {% for message in messages %}
                 <h2 id="messages">{{message}}</h2>
             {% endfor %}
-            <label for="uname"><b>Username</b></label>
+            <label for="uname"><strong>Username</strong></label>
             <p><input type="text" name="username" placeholder="Enter your Username..."></p>
-            <label for="psw"><b>Password</b></label>
+            <label for="psw"><strong>Password</strong></label>
             <p><input type="password" name="password" placeholder="Enter your Password..." ></p>
             <input class="btn btn-warning" type="submit" value="Login">        
             <p>Do not have an account<a href='{% url 'signup' %}'><br> Click here to Register</a></p>
