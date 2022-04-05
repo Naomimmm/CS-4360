@@ -5,7 +5,6 @@ body{
     width: 100%;
     background-position: center;
     background-size: cover;
-    position: relative;
     font-family: 'Hubballi', cursive;
 }
 
@@ -136,7 +135,7 @@ p{
 }
 
 .footer-end{
-    position: relative;
+    position: flex;
     left: 0;
     bottom: 0;
     width: 100%;
