@@ -1,22 +1,43 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block content %}
-<br>
-<br>
+
+<style>
+  body{
+    backdrop-filter: blur(5px);
+  }
+  
+  .login {
+      width: 450px;
+      min-height: 500px;
+      height: auto;
+      margin: 2% auto;
+      padding: 2%;
+      border-radius: 7px;
+      background-image: linear-gradient(to top, #ff594aa7 50%, rgba(0, 170, 255, 0.744) 70%);
+      outline-style: solid;
+      box-shadow: 0 9px 50px hsla(0, 0%, 100%, 0.812);
+  }
+</style>
+
+<br><br>
 
 <body>
-<form class="box" method="POST">      
-    {% csrf_token %}
-    <h1>Login Here</h1>
-        {% for message in messages %}
-            <h2 id="messages">{{message}}</h2>
-        {% endfor %}
-        <p><input type="text" name="username" placeholder="Enter your Username..."></p>
-        <p><input type="password" name="password" placeholder="Enter your Password..." ></p>
-        <input class="btn btn-warning" type="submit" value="Login">        
-        <p>Do not have an account<a href='{% url 'signup' %}'><br> Click here to Register</a></p>
-        <p><a href="#">Forgot password?</a></p>
-    </form>
-</div>
+    <div class="login" method="POST">      
+        {% csrf_token %}
+        <h1>Log In Here</h1>
+        <h3>Welcome Back!<br>Please use your username and password to login</h3>
+        <br>
+            {% for message in messages %}
+                <h2 id="messages">{{message}}</h2>
+            {% endfor %}
+            <label for="uname"><b>Username</b></label>
+            <p><input type="text" name="username" placeholder="Enter your Username..."></p>
+            <label for="psw"><b>Password</b></label>
+            <p><input type="password" name="password" placeholder="Enter your Password..." ></p>
+            <input class="btn btn-warning" type="submit" value="Login">        
+            <p>Do not have an account<a href='{% url 'signup' %}'><br> Click here to Register</a></p>
+            <p><a href="#">Forgot password?</a></p>
+    </div>
 </body>
 {% endblock %}

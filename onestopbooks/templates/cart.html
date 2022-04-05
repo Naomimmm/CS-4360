@@ -3,6 +3,16 @@
 
 {% block content %}
 
+<style>
+    footer{
+    position: fixed;
+    bottom: 30px;
+    width: 100%;
+    height: 20px;
+    margin-top: 20px;
+    }
+</style>
+
 <h1>Cart Page</h1>
 <div class="row">
     <div class="col-lg-6">
@@ -60,21 +70,18 @@
 </div>
 
 <div class="col-lg-6">
-        <div class="box-element">
-            <a  class="btn btn-outline-dark" href="{% url 'home' %}">&#x2190; Continue Shopping</a>
-            <br>
-            <br>
-            <table class="table">
-                <tr>
-                    <th><h5>Items: <strong>{{ buy.get_cart_items }}</strong></h5></th>
-                    <th><h5>Total:<strong>${{ buy.get_cart_total|floatformat:2 }}</strong></h5></th>
-                    <th>
-                        <a class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
-                    </th>
-                </tr>
-            </table>
-
-        </div>
+    <div class="box-element">
+        <a  class="btn btn-outline-dark" href="{% url 'books' %}">&#x2190; Continue Shopping</a>
+        <br>
+        <br>
+        <table class="table">
+            <tr>
+                <th><h5>Items: <strong>{{ buy.get_cart_items }}</strong></h5></th>
+                <th><h5>Total:<strong>${{ buy.get_cart_total|floatformat:2 }}</strong></h5></th>
+                <th><a class="btn btn-success" href="{% url 'checkout' %}">Checkout</a></th>
+            </tr>
+        </table>
     </div>
-
+</div>
+<br>
 {% endblock %}

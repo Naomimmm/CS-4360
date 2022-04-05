@@ -1,16 +1,36 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block content %}
-<br>
+<style>
 
+    body{
+        backdrop-filter: blur(5px);
+    }
+    .signup {
+        width: 450px;
+        min-height: 500px;
+        height: auto;
+        margin: 2% auto;
+        padding: 2%;
+        border-radius: 7px;
+        background-image: linear-gradient(to top, #4ad5ff99 50%, rgba(225, 255, 0, 0.671) 80%);
+        outline-style: solid;
+        box-shadow: 0 9px 50px hsla(0, 0%, 100%, 0.812);
+    }
+</style>
+
+<br>
 <div class="signup">
     <form method="POST" action="" >
         {% csrf_token %}
-        <h1>Register Here</h1
+        <h1>Sign Up</h1>
+        <h3>Hello there!<br>Become a member by creating an account below</h3>
+        <br>
         {{form.as_p}}
         {{cust_form.as_p}} 
        
         <input class="btn btn-warning" type="submit" value="Register Account">
+        <br></br>
     </form>
 </div>
 {% endblock %}
