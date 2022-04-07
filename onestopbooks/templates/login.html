@@ -23,7 +23,8 @@
 <br><br>
 
 <body>
-    <div class="login" method="POST">      
+  <div class="login">
+    <form class="box" method="POST">      
         {% csrf_token %}
         <h1>Log In Here</h1>
         <h3>Welcome Back!<br>Please use your username and password to login</h3>
@@ -38,6 +39,7 @@
             <input class="btn btn-warning" type="submit" value="Login">        
             <p>Do not have an account<a href='{% url 'signup' %}'><br> Click here to Register</a></p>
             <p><a href="#">Forgot password?</a></p>
-    </div>
+    </form>
+  </div>
 </body>
 {% endblock %}
