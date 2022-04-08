@@ -10,10 +10,17 @@ import json
 from django.contrib import messages
 
 GENRE_PRODUCTS_HTML = "genre-products.html"
+SUCCESS_CHECKOUT_HTML = "checkout-success.html"
+
 
 # Create your views here.
 def home_view(request, *args, **kwargs):
     return render(request, "home.html", {})
+
+
+def successcheckout_view(request, *args, **kwargs):
+    return render(request, SUCCESS_CHECKOUT_HTML, {})
+
 
 def randombooks_view(request, *args, **kwargs):
     items = list(Book.objects.all())
