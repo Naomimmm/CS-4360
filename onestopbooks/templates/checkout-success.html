@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+<style>
+    body{
+      backdrop-filter: blur(5px);
+    }
+    
+    .successcheck {
+        width: 650px;
+        min-height: 600px;
+        height: auto;
+        margin: 2% auto;
+        padding: 2%;
+        border-radius: 7px;
+        background-image: linear-gradient(to top, #ffffffa7 50%, rgba(0, 170, 255, 0.744) 70%);
+        outline-style: solid;
+        outline-color: green;
+        box-shadow: 0 9px 50px hsla(0, 0%, 100%, 0.812);
+    }
+  </style>
+
+<div class ="successcheck">
+  <h1 style="font-size: 55px;">SUCCESSFUL ORDER!</h1>
+  <img  id="confirmation-icon" src="{% static 'images/check1.png' %}" style="max-width:40%;
+    max-height:40%; display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;">
+
+  <h2 style="font-size: 50px;">Thank you for your order!</h2>
+  <br>
+  <h3 style="font-size: 25px;">You will recieve a confirmation email with your order details.</h3>
+  <br>
+  <h3 style="font-size: 25px;">Your confirmation number is: 00000001</h3>
+  <br></br>
+  <a style="outline-style: solid; outline-width: 1px;" href="{% url 'home' %}"class="btn btn-info">Return Home</a>
+</div>
+
+{% endblock %}

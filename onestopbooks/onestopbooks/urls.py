@@ -34,4 +34,5 @@ urlpatterns = [
     path('logout/', logoutPage,name='logout'),
     path('product/<str:isbn>', product_view, name='product'),
     path('update_item', update_item, name='update_item'),
+    path('successcheckout/', successcheckout_view, name='successcheckout'),
 ]
