@@ -19,6 +19,18 @@ def home_view(request, *args, **kwargs):
 
 
 def successcheckout_view(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
+        items_to_purchase = order.orderitem_set.all() # this is for purchase
+        items_to_rent = order.rentitem_set.all() # this is for rent
+
+        for item in items_to_purchase:
+            item.product.decrease_quantity(item.quantity)
+
+        for item in items_to_rent:
+            item.product1.decrease_quantity(item.quantity1)
+
     return render(request, SUCCESS_CHECKOUT_HTML, {})
 
 

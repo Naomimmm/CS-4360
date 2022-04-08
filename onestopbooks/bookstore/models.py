@@ -17,6 +17,13 @@ class Book(models.Model):
     def __str__(self):
         """String for representing the Book title."""
         return self.title
+
+    def decrease_quantity(self, quantity_to_decrease):
+        print("Current Quantity: " + str(self.quantity) + " Amount to Decrease: " + str(quantity_to_decrease))
+        if (quantity_to_decrease < self.quantity):
+            self.quantity = self.quantity - quantity_to_decrease
+            self.save()
+            print("New Quantity: " + str(self.quantity))
         
 # Customer Model
 class Customer(models.Model):
