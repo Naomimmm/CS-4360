@@ -116,8 +116,8 @@ class ReviewRating(models.Model):
     
     user = models.ForeignKey(User, models.CASCADE)
     book = models.ForeignKey(Book, models.CASCADE)
-    subject = models.TextField(max_length=100)
-    review = models.TextField(max_length = 2000)
+    subject = models.TextField(max_length=100, null=True, blank=True)
+    review = models.TextField(max_length = 2000, blank=True, null=True)
     rate = models.FloatField(default=0)
     date_created = models.DateTimeField(auto_now_add=True)
     
