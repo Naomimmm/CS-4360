@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext as _
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
+from django.db.models import Avg, Count
 # Create your models here.
 class Book(models.Model):
     """ Book model with ISBN, title, authors, year public, price, quantity and thumbnail"""
@@ -24,6 +25,27 @@ class Book(models.Model):
             self.quantity = self.quantity - quantity_to_decrease
             self.save()
             print("New Quantity: " + str(self.quantity))
+    
+    def countReview(self):
+        """ To find the total Review for that book """
+        
+        reviews = ReviewRating.objects.filter(book=self).aggregate(count=Count('id'))
+        count = 0
+        if reviews['count'] is not None:
+            count = int(reviews['count'])
+        return count
+    
+    
+    def averageReview(self):
+        """ To find the Average Review for that book """
+        
+        reviews = ReviewRating.objects.filter(book=self).aggregate(average=Avg('rate'))
+        avg = 0
+        ave = 0
+        if reviews['average'] is not None:
+            avg = float(reviews['average'])
+            ave = round(avg, 2)
+        return ave
         
 # Customer Model
 class Customer(models.Model):
@@ -88,3 +110,16 @@ class RentItem(models.Model):
     quantity1 = models.IntegerField(default=0, null=True, blank=True) # quantity of that book in cart, default is at 0
     date_added1 = models.DateTimeField(auto_now_add=True)
     date_due1 = datetime.now() + timedelta(days=7)
+    
+class ReviewRating(models.Model):
+    """ Review model for user with one to many relation ship, so one user can have write many reviews """
+    
+    user = models.ForeignKey(User, models.CASCADE)
+    book = models.ForeignKey(Book, models.CASCADE)
+    subject = models.TextField(max_length=100)
+    review = models.TextField(max_length = 2000)
+    rate = models.FloatField(default=0)
+    date_created = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return str(self.book.title + self.user.username)

@@ -151,7 +151,12 @@ def logoutPage(request):
 
 def product_view(request, isbn):
     book = Book.objects.get(isbn = isbn)
-    return render(request, "product.html", {'book': book})
+    reviews = ReviewRating.objects.filter(book_id = book.isbn)
+    context = {
+        'book':book,
+        'reviews': reviews,
+    }
+    return render(request, "product.html", context)
 
 def update_item(request):
     data = json.loads(request.body)
@@ -199,3 +204,21 @@ def search_results(request):
         return render(request, "search.html", {'books': books})
     else:
         return render(request, "search.html", {})
+    
+
+def submit_review(request, book_isbn):
+    """ To create/save review to dabase and return to same url """
+    url = request.META.get('HTTP_REFERER')
+
+    if request.method == 'POST':        
+        form = ReviewRatingForm(request.POST)
+        if form.is_valid():
+            data = ReviewRating()
+            data.subject = form.cleaned_data['subject']
+            data.rate = form.cleaned_data['rate']
+            data.review = form.cleaned_data['review']
+            data.book_id = book_isbn
+            data.user_id = request.user.id
+            data.save()
+            messages.success(request, 'Thank you! Your review has been submitted')
+            return redirect(url)

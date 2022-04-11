@@ -12,8 +12,14 @@ class CreateUserForm(UserCreationForm):
         fields=['username', 'password1', 'password2']
 
 class CustomerForm(ModelForm):
+    """ Create Customer Form """
     class Meta:
         model=Customer
         fields='__all__'
         exclude=['user']
-        
+
+class ReviewRatingForm(ModelForm):
+    """ Create form for review and rating """
+    class Meta:
+        model = ReviewRating
+        fields = ['subject', 'review', 'rate']
