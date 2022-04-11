@@ -1,6 +1,20 @@
 {%extends 'base.html'%}
 {% load static %}
 {% block content %}
+
+<style>
+    .boxed {
+        box-sizing: content-box;
+        width: 900px;
+        padding: 15px;
+        background: lightblue;   
+    }
+
+    .rating-star{
+        color: #ffb503 !important;
+    }
+    
+</style>
 <div>
     <br>
     <div class="text-center">
@@ -12,16 +26,130 @@
         <hr>
         <h5 style="font-size: 28px;">Product Details</h5>
         <br>
+
+        <i style="font-size: 26px;">
+                <i class="fa fa-star{% if book.averageReview < 0.5 %}-o{% elif book.averageReview >= 0.5 and book.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if book.averageReview < 1.5 %}-o{% elif book.averageReview >= 1.5 and book.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if book.averageReview < 2.5 %}-o{% elif book.averageReview >= 2.5 and book.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if book.averageReview < 3.5 %}-o{% elif book.averageReview >= 3.5 and book.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if book.averageReview < 4.5 %}-o{% elif book.averageReview >= 4.5 and book.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i style="font-size: 26px;"><b>&nbsp{{book.countReview}} ratings &nbsp&nbsp</b></h6> <i>
+
         <h6 style="font-size: 26px;"><strong>Description:</strong> {{book.description}}</h6>
         <h6 style="font-size: 26px;"><strong>ISBN:</strong> {{book.isbn}}</h6>
         <h6 style="font-size: 26px;"><strong>Author(s):</strong> {{book.authors}}</h6>
         <h6 style="font-size: 26px;"><strong>Publisher:</strong> {{book.publisher}}</h6>
         <h6 style="font-size: 26px;"><strong>Year Published:</strong> {{book.year_public}}</h6>
         <h6 style="font-size: 26px;"><strong>Price:</strong> ${{book.price}}</h6>
+        
         <br>
         <a data-product={{book.isbn}} data-action="rent" class="btn btn-success add-btn update-cart" style="font-weight: bold;">Rent</a>
         <a data-product={{book.isbn}} data-action='purchase' class="btn btn-success add-btn update-cart" style="font-weight: bold;">Purchase</a>
     </div>
-</div>
+    <br>
+                <br>
+                <br>
+                <br>
+                <br>
+<!-- Rating and Review -->
+<div class="row">
+    <div class="cod-md-9">
+        
+
+        <form action="{% url 'submit_review' book.isbn%}" method="POST">
+            {% csrf_token %}
+            <h2><strong> Write your review </strong></h2>
+            <div>
+                <!-- Rating start -->
+                <label><strong>How do you rate this book?</strong></label>
+                <br>
+                <div class="rate">
+                    <input type="radio" name="rate" id="rate10" value="5" required><label for="rate10" title="5"></label>
+                    <input type="radio" name="rate" id="rate9" value="4.5" required><label for="rate9" title="4.5" class="half"></label>
+                    <input type="radio" name="rate" id="rate8" value="4" required><label for="rate8" title="4"></label>
+                    <input type="radio" name="rate" id="rate7" value="3.5" required><label for="rate7" title="3.5" class="half"></label>
+                    <input type="radio" name="rate" id="rate6" value="3" required><label for="rate6" title="3"></label>
+                    <input type="radio" name="rate" id="rate5" value="2.5" required><label for="rate5" title="2.5" class="half"></label>
+                    <input type="radio" name="rate" id="rate4" value="2" required><label for="rate4" title="2"></label>
+                    <input type="radio" name="rate" id="rate3" value="1.5" required><label for="rate3" title="1.5" class="half"></label>
+                    <input type="radio" name="rate" id="rate2" value="1" required><label for="rate2" title="1"></label>
+                    <input type="radio" name="rate" id="rate1" value="0.5" required><label for="rate1" title="0.5" class="half"></label>
+                
+                </div>
+                <br>
+                
+                <strong>Review Title:</strong>
+                <input type="text" class="form-control" name="subject">
+                <br>
+                <strong>Review:</strong>
+                <textarea name="review" rows="4" class="form-control"></textarea>
+                <br>
+                {% if user.is_authenticated  %}
+                    <input type="submit" value="Submit Review" class="btn btn-primary">
+                {% else %}
+                    <p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login Now</a></span></p>
+
+                {% endif %}
+            </div>
+
+            <br>
+            <header class="section-heading">
+                <h3>Customer Review</h3>
+            </header>
+
+        </form>
+        
+            <span>
+                <i> <b><span>Average Rating {{book.averageReview}} </span></b></i>
+                <div class="rating-star">
+                <i class="fa fa-star{% if book.averageReview < 0.5 %}-o{% elif book.averageReview >= 0.5 and book.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if book.averageReview < 1.5 %}-o{% elif book.averageReview >= 1.5 and book.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if book.averageReview < 2.5 %}-o{% elif book.averageReview >= 2.5 and book.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if book.averageReview < 3.5 %}-o{% elif book.averageReview >= 3.5 and book.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if book.averageReview < 4.5 %}-o{% elif book.averageReview >= 4.5 and book.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+            </div>
+            </span>
+        
+        
+<h2><b><span>{{book.countReview}} Reviews</span></b></h2>
+<hr style="height:2px;border-width:0; border: 5px solid blue; width:20%; border-radius: 5px;">
+{% for review in reviews %}
+
+        <article class="box mb-3">
+            <div class="icontext w-100">
+                <img src="{% static './images/avatars/avatar1.jpg' %}"  alt="sample profile pic" width="50" height="50" class="img-xs icon rounded-circle" class="mb-1">   <strong> {{ review.user.username }}</strong></h3>
+                <div class="text"><!--text-->
+                    
+                    
+                    <span>
+                        <div class="rating-star"><!--rating star-->
+                        <i class="fa fa-star{% if review.rate == 0.5 %}-half-o{% elif review.rate < 1 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if review.rate == 1.5 %}-half-o{% elif review.rate < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if review.rate == 2.5 %}-half-o{% elif review.rate < 3 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if review.rate == 3.5 %}-half-o{% elif review.rate < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if review.rate == 4.5 %}-half-o{% elif review.rate < 5 %}-o {% endif %}" aria-hidden="true"></i>
+                    </div><!--rating star--> 
+                        <i style="font-size:30px" font-color><strong> {{review.subject}} </strong></i>
+                    
+                    
+                    </span>
+                
+                </div><!--text-->
+                <span><strong style="font-size:20px">Reviewed on {{review.date_created}}</strong></span>
+            </div> <!-- icontext.//-->
+            <div class="mt-3">
+                <div class="boxed">
+                
+                <p>
+                    {{review.review}}
+                </p>
+            </div> <!-- boxed -->
+            </div>
+        </article>
+        
+        
+{% endfor %}
+    </div> <!-- col.//-->
+</div> <!-- row.//-->
 <br>
 {% endblock %}
