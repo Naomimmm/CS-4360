@@ -8,6 +8,7 @@ from .forms import *
 from django.http import JsonResponse
 import json
 from django.contrib import messages
+from django.db.models import Q
 
 GENRE_PRODUCTS_HTML = "genre-products.html"
 SUCCESS_CHECKOUT_HTML = "checkout-success.html"
@@ -200,7 +201,7 @@ def update_item(request):
 def search_results(request):
     if request.method == "POST":
         results = request.POST['searched']
-        books = Book.objects.filter(title__contains =  results)
+        books = Book.objects.filter(Q(title__contains = results) | Q(isbn__contains = results) | Q(authors__contains = results) | Q(year_public__contains = results) | Q(publisher__contains = results))
         return render(request, "search.html", {'books': books})
     else:
         return render(request, "search.html", {})
