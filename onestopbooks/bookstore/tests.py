@@ -559,6 +559,62 @@ class ViewsTestCase(TestCase):
 
         User.objects.create_user(**self.credentials)
 
+        self.test_user = User.objects.get(username="testuser")
+        self.assertIsNotNone(self.test_user)
+
+        Book.objects.create(
+            isbn = "195153448",
+            title = "Classical Mythology",
+            authors = "Mark P. O. Morford",
+            year_public = "2002",
+            publisher = "Oxford University Press",
+            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            quantity = 10,
+            price = 10)
+
+        self.test_book = Book.objects.get(isbn="195153448")
+
+        Book.objects.create(
+            isbn = "771074670",
+            title = "Nights Below Station Street",
+            authors = "David Adams Richards",
+            year_public = "1988",
+            publisher = "Emblem Editions",
+            thumbnail_pic = "http://images.amazon.com/images/P/0771074670.01.MZZZZZZZ.jpg",
+            quantity = 10,
+            price = 10)
+
+        self.test_book_2 = Book.objects.get(isbn="771074670")
+        
+        Customer.objects.create(
+            user = self.test_user,
+            first_name = "Amy",
+            last_name = "Test",
+            email = "AmyTest@gmail.com",
+            address_1 = "123 S. Denver",
+            city = "Denver",
+            state = "Colorado",
+            zip_code = "80123")
+
+        self.test_customer = Customer.objects.get(first_name="Amy")
+
+        Order.objects.create(
+            customer = self.test_customer,
+            complete = "False",
+            transaction_id = "1")
+
+        self.test_order = Order.objects.get(customer=self.test_customer)
+
+        OrderItem.objects.create(
+            product = self.test_book,
+            order = self.test_order,
+            quantity = 4)
+
+        RentItem.objects.create(
+            product1 = self.test_book_2,
+            order1 = self.test_order,
+            quantity1 = 1)
+
     def test_home_view(self):
         response = self.client.get('')
         self.assertEqual(response.status_code, 200)
@@ -601,16 +657,6 @@ class ViewsTestCase(TestCase):
         self.assertRedirects(response, '/')
 
     def test_product_view_valid_book(self):
-        Book.objects.create(
-            isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
-            year_public = "2002",
-            publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
-            quantity = 10,
-            price = 10)
-
         response = self.client.get('/product/195153448')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'product.html')
@@ -623,102 +669,15 @@ class ViewsTestCase(TestCase):
     def test_successcheckout_view_Authenticated_Purchase_Book(self):
         self.client.post('/login/', self.credentials)
 
-        test_user = User.objects.get(username="testuser")
-        self.assertIsNotNone(test_user)
-
-        Book.objects.create(
-            isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
-            year_public = "2002",
-            publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
-            quantity = 10,
-            price = 10)
-
-        test_book = Book.objects.get(isbn="195153448")
-        
-        Customer.objects.create(
-            user = test_user,
-            first_name = "Amy",
-            last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
-            city = "Denver",
-            state = "Colorado",
-            zip_code = "80123")
-
-        test_customer = Customer.objects.get(first_name="Amy")
-
-        Order.objects.create(
-            customer = test_customer,
-            complete = "False",
-            transaction_id = "1")
-
-        test_order = Order.objects.get(customer=test_customer)
-
-        OrderItem.objects.create(
-            product = test_book,
-            order = test_order,
-            quantity = 4)
-
         response = self.client.get('/successcheckout/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'checkout-success.html')
 
         test_book = Book.objects.get(isbn="195153448")
-
+        test_book_2 = Book.objects.get(isbn="771074670")
+        
         self.assertEqual(6, test_book.quantity)
-
-    def test_successcheckout_view_Authenticated_Rent_Book(self):
-        self.client.post('/login/', self.credentials)
-
-        test_user = User.objects.get(username="testuser")
-        self.assertIsNotNone(test_user)
-
-        Book.objects.create(
-            isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
-            year_public = "2002",
-            publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
-            quantity = 10,
-            price = 10)
-
-        test_book = Book.objects.get(isbn="195153448")
-        
-        Customer.objects.create(
-            user = test_user,
-            first_name = "Amy",
-            last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
-            city = "Denver",
-            state = "Colorado",
-            zip_code = "80123")
-
-        test_customer = Customer.objects.get(first_name="Amy")
-
-        Order.objects.create(
-            customer = test_customer,
-            complete = "False",
-            transaction_id = "1")
-
-        test_order = Order.objects.get(customer=test_customer)
-
-        RentItem.objects.create(
-            product1 = test_book,
-            order1 = test_order,
-            quantity1 = 1)
-
-        response = self.client.get('/successcheckout/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'checkout-success.html')
-
-        test_book = Book.objects.get(isbn="195153448")
-        
-        self.assertEqual(9, test_book.quantity)
+        self.assertEqual(9, test_book_2.quantity)
 
 class ReviewRatingTestCase(TestCase):
     """ Test case for Review and Rating Models """
