@@ -27,13 +27,13 @@
         <h5 style="font-size: 28px;">Product Details</h5>
         <br>
 
-        <i style="font-size: 26px;">
+        <em style="font-size: 26px;">
                 <i class="fa fa-star{% if book.averageReview < 0.5 %}-o{% elif book.averageReview >= 0.5 and book.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
                 <i class="fa fa-star{% if book.averageReview < 1.5 %}-o{% elif book.averageReview >= 1.5 and book.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
                 <i class="fa fa-star{% if book.averageReview < 2.5 %}-o{% elif book.averageReview >= 2.5 and book.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
                 <i class="fa fa-star{% if book.averageReview < 3.5 %}-o{% elif book.averageReview >= 3.5 and book.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
                 <i class="fa fa-star{% if book.averageReview < 4.5 %}-o{% elif book.averageReview >= 4.5 and book.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
-                <i style="font-size: 26px;"><b>&nbsp{{book.countReview}} ratings &nbsp&nbsp</b></h6> <i>
+                <em style="font-size: 26px;"><strong>&nbsp{{book.countReview}} ratings &nbsp&nbsp</strong></h6> </em>
 
         <h6 style="font-size: 26px;"><strong>Description:</strong> {{book.description}}</h6>
         <h6 style="font-size: 26px;"><strong>ISBN:</strong> {{book.isbn}}</h6>
@@ -100,7 +100,7 @@
         </form>
         
             <span>
-                <i> <b><span>Average Rating {{book.averageReview}} </span></b></i>
+                <em> <strong><span>Average Rating {{book.averageReview}} </span></strong></em>
                 <div class="rating-star">
                 <i class="fa fa-star{% if book.averageReview < 0.5 %}-o{% elif book.averageReview >= 0.5 and book.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
                 <i class="fa fa-star{% if book.averageReview < 1.5 %}-o{% elif book.averageReview >= 1.5 and book.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
@@ -111,7 +111,7 @@
             </span>
         
         
-<h2><b><span>{{book.countReview}} Reviews</span></b></h2>
+<h2><strong><span>{{book.countReview}} Reviews</span></strong></h2>
 <hr style="height:2px;border-width:0; border: 5px solid blue; width:20%; border-radius: 5px;">
 {% for review in reviews %}
 
@@ -129,7 +129,7 @@
                         <i class="fa fa-star{% if review.rate == 3.5 %}-half-o{% elif review.rate < 4 %}-o {% endif %}" aria-hidden="true"></i>
                         <i class="fa fa-star{% if review.rate == 4.5 %}-half-o{% elif review.rate < 5 %}-o {% endif %}" aria-hidden="true"></i>
                     </div><!--rating star--> 
-                        <i style="font-size:30px" font-color><strong> {{review.subject}} </strong></i>
+                        <em style="font-size:30px" font-color><strong> {{review.subject}} </strong></em>
                     
                     
                     </span>
