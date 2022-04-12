@@ -202,7 +202,7 @@ def search_results(request):
     if request.method == "POST":
         results = request.POST['searched']
         books = Book.objects.filter(Q(title__contains = results) | Q(isbn__contains = results) | Q(authors__contains = results) | Q(year_public__contains = results) | Q(publisher__contains = results))
-        return render(request, "search.html", {'books': books})
+        return render(request, "search.html", {'results': results, 'books': books})
     else:
         return render(request, "search.html", {})
     
