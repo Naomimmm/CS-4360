@@ -1,18 +1,25 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from bookstore.models import *
+from bookstore.models import Book, Customer, Order, OrderItem, RentItem, User, ReviewRating
 
 # Create your tests here.
+
+# constant variable for tests
+BOOK_TITLE = "Classical Mythology"
+BOOK_AUTHORS = "Mark P. O. Morford"
+BOOK_THUMBNAIL = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg"
+TEST_EMAIL = "AmyTest@gmail.com"
+TEST_ADDRESS = "123 S. Denver"
 # Django test example: https://docs.djangoproject.com/en/4.0/topics/testing/overview/
 class BookTestCase(TestCase):
     def test_valid_book(self):
         Book.objects.create(
             isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
+            title = BOOK_TITLE,
+            authors = BOOK_AUTHORS,
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
         
@@ -22,11 +29,11 @@ class BookTestCase(TestCase):
     def test_invalid_book_isbn_too_long(self):
         Book.objects.create(
             isbn = "0000000000000000000000000000000",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
+            title = BOOK_TITLE,
+            authors = BOOK_AUTHORS,
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
         
@@ -43,10 +50,10 @@ class BookTestCase(TestCase):
         Book.objects.create(
             isbn = "195153448",
             title = "This title is too long. This title is too long. This title is too long. This title is too long. This title is too long. This title is too long. This title is too long. This title is too long. This title is too long. This title is too long.",
-            authors = "Mark P. O. Morford",
+            authors = BOOK_AUTHORS,
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
         
@@ -62,11 +69,11 @@ class BookTestCase(TestCase):
     def test_invalid_book_authors_too_long(self):
         Book.objects.create(
             isbn = "195153448",
-            title = "Classical Mythology",
+            title = BOOK_TITLE,
             authors = "Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long. Authors is too long.",
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
         
@@ -77,22 +84,22 @@ class BookTestCase(TestCase):
         with self.assertRaises(ValueError):
             Book.objects.create(
                 isbn = "195153448",
-                title = "Classical Mythology",
-                authors = "Mark P. O. Morford",
+                title = BOOK_TITLE,
+                authors = BOOK_AUTHORS,
                 year_public = "NotRealYear",
                 publisher = "Oxford University Press",
-                thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+                thumbnail_pic = BOOK_THUMBNAIL,
                 quantity = 10,
                 price = 10)
 
     def test_invalid_book_publisher_too_long(self):
         Book.objects.create(
             isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
+            title = BOOK_TITLE,
+            authors = BOOK_AUTHORS,
             year_public = "2002",
             publisher = "Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long. Publisher too long.",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
         
@@ -102,25 +109,25 @@ class BookTestCase(TestCase):
     def test_book_to_string(self):
         Book.objects.create(
             isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
+            title = BOOK_TITLE,
+            authors = BOOK_AUTHORS,
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
         
         valid_book = Book.objects.get(isbn="195153448")
-        self.assertEqual(str(valid_book), "Classical Mythology")
+        self.assertEqual(str(valid_book), BOOK_TITLE)
 
     def test_book_decrease_quantity(self):
         Book.objects.create(
             isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
+            title = BOOK_TITLE,
+            authors = BOOK_AUTHORS,
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
         
@@ -135,8 +142,8 @@ class CustomerTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -148,8 +155,8 @@ class CustomerTestCase(TestCase):
         Customer.objects.create(
             first_name = "AmyAmyAmyAmyAmyAmyAmyAmyAmyAmyAmy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -165,8 +172,8 @@ class CustomerTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Last name is too long. Last name is too long.Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long. Last name is too long.",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -182,7 +189,7 @@ class CustomerTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
+            email = TEST_EMAIL,
             address_1 = "Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long. Address is too long.",
             city = "Denver",
             state = "Colorado",
@@ -199,8 +206,8 @@ class CustomerTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long. City is too long.",
             state = "Colorado",
             zip_code = "80123")
@@ -216,8 +223,8 @@ class CustomerTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long. State is too long.",
             zip_code = "80123")
@@ -233,8 +240,8 @@ class CustomerTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "NoRealZipCode")
@@ -250,8 +257,8 @@ class CustomerTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -264,8 +271,8 @@ class OrderTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -283,11 +290,11 @@ class OrderTestCase(TestCase):
     def test_invalid_order_invalid_customer(self):
         Book.objects.create(
             isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
+            title = BOOK_TITLE,
+            authors = BOOK_AUTHORS,
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
 
@@ -304,14 +311,14 @@ class OrderTestCase(TestCase):
             Order.objects.create(
                 customer = None,
                 complete = "notBoolean",
-                transaction_id = "123 S. Denver")
+                transaction_id = TEST_ADDRESS)
 
     def test_invalid_order_invalid_customer(self):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -334,8 +341,8 @@ class OrderTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -355,8 +362,8 @@ class OrderTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -376,8 +383,8 @@ class OrderTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -397,11 +404,11 @@ class OrderItemCase(TestCase):
     def setUp(self):
         Book.objects.create(
             isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
+            title = BOOK_TITLE,
+            authors = BOOK_AUTHORS,
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
 
@@ -410,8 +417,8 @@ class OrderItemCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -491,11 +498,11 @@ class RentItemCase(TestCase):
     def setUp(self):
         Book.objects.create(
             isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
+            title = BOOK_TITLE,
+            authors = BOOK_AUTHORS,
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
 
@@ -504,8 +511,8 @@ class RentItemCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -564,11 +571,11 @@ class ViewsTestCase(TestCase):
 
         Book.objects.create(
             isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
+            title = BOOK_TITLE,
+            authors = BOOK_AUTHORS,
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
 
@@ -590,8 +597,8 @@ class ViewsTestCase(TestCase):
             user = self.test_user,
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
@@ -685,11 +692,11 @@ class ReviewRatingTestCase(TestCase):
     def setUp(self):
         Book.objects.create(
             isbn = "195153448",
-            title = "Classical Mythology",
-            authors = "Mark P. O. Morford",
+            title = BOOK_TITLE,
+            authors = BOOK_AUTHORS,
             year_public = "2002",
             publisher = "Oxford University Press",
-            thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+            thumbnail_pic = BOOK_THUMBNAIL,
             quantity = 10,
             price = 10)
         self.test_book = Book.objects.get(isbn="195153448")
@@ -697,8 +704,8 @@ class ReviewRatingTestCase(TestCase):
         Customer.objects.create(
             first_name = "Amy",
             last_name = "Test",
-            email = "AmyTest@gmail.com",
-            address_1 = "123 S. Denver",
+            email = TEST_EMAIL,
+            address_1 = TEST_ADDRESS,
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
