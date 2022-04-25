@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.views import generic
-from bookstore.models import *
-from .forms import *
+from bookstore.models import Order, Book, RentItem, ReviewRating, OrderItem
+from .forms import CreateUserForm, CustomerForm, ReviewRatingForm
 from django.http import JsonResponse
 import json
 from django.contrib import messages
@@ -15,11 +15,11 @@ SUCCESS_CHECKOUT_HTML = "checkout-success.html"
 
 
 # Create your views here.
-def home_view(request, *args, **kwargs):
+def home_view(request):
     return render(request, "home.html", {})
 
 
-def successcheckout_view(request, *args, **kwargs):
+def successcheckout_view(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
@@ -35,27 +35,27 @@ def successcheckout_view(request, *args, **kwargs):
     return render(request, SUCCESS_CHECKOUT_HTML, {})
 
 
-def randombooks_view(request, *args, **kwargs):
+def randombooks_view(request):
     items = list(Book.objects.all())
     random_items = random.sample(items, 20)
 
     return render(request, GENRE_PRODUCTS_HTML, {'books': random_items})
 
 
-def booksunder_view(request, *args, **kwargs):
+def booksunder_view(request):
     items_under = Book.objects.filter(price__range=(0, 9))
     items_under_sorted = items_under.order_by('price')
 
     return render(request, GENRE_PRODUCTS_HTML, {'books': items_under_sorted})
 
 
-def newestbooks_view(request, *args, **kwargs):
+def newestbooks_view(request):
     items_num = len(Book.objects.all())
     last_twenty = Book.objects.filter().order_by()[items_num-20:]
 
     return render(request, GENRE_PRODUCTS_HTML, {'books': last_twenty})
 
-def books_view(request, *args, **kwargs):
+def books_view(request):
     results = request.POST.get('book-filterd')
     
     if results == 'featured':
@@ -73,10 +73,10 @@ def books_view(request, *args, **kwargs):
 
     return render(request, "products.html", {'books': books})
 
-def aboutus_view(request, *args, **kwargs):
+def aboutus_view(request):
     return render(request, "aboutus.html", {})
 
-def checkout_view(request, *args, **kwargs):
+def checkout_view(request):
     # check if user is authenticated
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -91,7 +91,7 @@ def checkout_view(request, *args, **kwargs):
     
     return render(request, "checkout.html", context)
 
-def cart_view(request, *args, **kwargs):
+def cart_view(request):
     # check if user is authenticated
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -108,7 +108,7 @@ def cart_view(request, *args, **kwargs):
     context = {'items':items, 'rents':rents, 'buy':buy, 'rent':rent}
     return render(request, "cart.html", context)
     
-def loginPage(request):
+def login_page(request):
     if request.user.is_authenticated:
         return redirect('home')
     else:
@@ -125,7 +125,7 @@ def loginPage(request):
        context={}
        return render(request,'login.html',context)
 
-def signupPage(request):
+def signup_page(request):
     if request.user.is_authenticated:
         return redirect('home') 
     else: 
@@ -146,7 +146,7 @@ def signupPage(request):
         }
         return render(request,'signup.html',context)
 
-def logoutPage(request):
+def logout_page(request):
     logout(request)
     return redirect('/')
 
