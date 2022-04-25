@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from bookstore.views import home_view, aboutus_view, cart_view, books_view, newestbooks_view, booksunder_view, randombooks_view, checkout_view, login_page, signup_page, logout_page, product_view, update_item, successcheckout_view, submit_review
+from bookstore.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,9 +29,9 @@ urlpatterns = [
     path('randombooks/', randombooks_view, name='randombooks'),
     path('checkout/', checkout_view, name='checkout'),
     path('bookstore/', include('bookstore.urls')),
-    path('login/', login_page, name='login'),
-    path('signup/', signup_page, name='signup'),
-    path('logout/', logout_page,name='logout'),
+    path('login/', loginPage, name='login'),
+    path('signup/', signupPage, name='signup'),
+    path('logout/', logoutPage,name='logout'),
     path('product/<str:isbn>', product_view, name='product'),
     path('update_item', update_item, name='update_item'),
     path('successcheckout/', successcheckout_view, name='successcheckout'),
