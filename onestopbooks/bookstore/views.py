@@ -16,7 +16,16 @@ SUCCESS_CHECKOUT_HTML = "checkout-success.html"
 
 # Create your views here.
 def home_view(request, *args, **kwargs):
-    return render(request, "home.html", {})
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        buy, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
+        items = buy.orderitem_set.all()
+                
+    else: # for user that isnt log in
+        items = [] # empty for now
+        buy = {'get_cart_total':0, 'get_cart_items':0}
+    context = {'items':items, 'buy':buy}
+    return render(request, "home.html", context)
 
 
 def successcheckout_view(request, *args, **kwargs):
@@ -56,6 +65,14 @@ def newestbooks_view(request, *args, **kwargs):
     return render(request, GENRE_PRODUCTS_HTML, {'books': last_twenty})
 
 def books_view(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        buy, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
+        items = buy.orderitem_set.all() # this is for purchase
+    else: # for user that isnt log in
+        items = [] # empty for now
+        buy = {'get_cart_total':0, 'get_cart_items':0}
+    
     results = request.POST.get('book-filterd')
     
     if results == 'featured':
@@ -70,11 +87,21 @@ def books_view(request, *args, **kwargs):
         books = Book.objects.all().order_by('-price')
     else:
         books = Book.objects.all()
+        
+    context = {'items':items, 'buy':buy, 'books':books}
 
-    return render(request, "products.html", {'books': books})
+    return render(request, "products.html", context)
 
 def aboutus_view(request, *args, **kwargs):
-    return render(request, "aboutus.html", {})
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        buy, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
+        items = buy.orderitem_set.all() # this is for purchase
+    else: # for user that isnt log in
+        items = [] # empty for now
+        buy = {'get_cart_total':0, 'get_cart_items':0}
+    context = {'items':items, 'buy':buy}
+    return render(request, "aboutus.html", context)
 
 def checkout_view(request, *args, **kwargs):
     # check if user is authenticated
@@ -82,12 +109,10 @@ def checkout_view(request, *args, **kwargs):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
         items = order.orderitem_set.all() # this is for purchase
-        rents = order.rentitem_set.all() # this is for rent
     else: # for user that isnt log in
         items = [] # empty for now
-        rents = []
         order = {'get_cart_total':0, 'get_cart_items':0}
-    context = {'items':items, 'rents':rents, 'order':order}
+    context = {'items':items, 'order':order}
     
     return render(request, "checkout.html", context)
 
@@ -95,7 +120,6 @@ def cart_view(request, *args, **kwargs):
     # check if user is authenticated
     if request.user.is_authenticated:
         customer = request.user.customer
-
         buy, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
         rent, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
         items = buy.orderitem_set.all() # this is for purchase
