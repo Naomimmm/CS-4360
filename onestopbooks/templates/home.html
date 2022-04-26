@@ -2,48 +2,38 @@
 {% load static %}
 
 {% block content %}
-<h1 style="text-align: center; color: rgb(0, 0, 0);"><strong>Welcome Book Worms! <br>Your <span style="color: crimson;">OneStop</span> destination for your book needs!</strong></h1>
-<br></br>
-<br></br>
 
-<div class="row" >
-  <div style="box-shadow: 0 0 11px 4px #fff, 0 0 21px 10px rgb(199, 164, 132), 0 0 31px 18px rgb(74, 189, 255); ">
-    <h3 style="font-size: 60px; text-align: center; color: rgb(0, 0, 0);">Want to hear a secret...</h3><br>
-      <p style="font-size: 30px; text-align: center; color: rgb(0, 0, 0)">At OneStop Books we offer a OneStop destination for all your book Essentials!
-        <br>If it's renting a book or purchasing a book then look no further! &#10084;&#65039;
-      </p>
-  </div>
-  <br></br>
+<div class="home-main">
+<div class="home-text">
+<h1 class="home-3dtext" style="text-align: center; font-size: 130px; margin-bottom: 0px; padding-bottom: 0%;">One<span style="color: rgb(35, 209, 235);">Stop</span> Books</h1>
 </div>
-<br></br>
 
-<div class="row" style="text-align: center; display: inline; display: block;">
-  <a href="{% url 'login' %}" class="btn btn-primary btn-lg" style="width: 150px;">Login</a>
-  <a href="{% url 'signup' %}" class="btn btn-primary btn-lg" style="width: 150px;">Sign-Up</a>
-</div>
-<br></br>
 <br></br>
 <br></br>
 
+<div class="rest-of">
 <div class="row"  style="margin-left: 150px;">
   <div class="col-lg-4" style="margin-left: 0px;">
-    <div class="box-element">
-      <a style=" display: block; text-align: center; text-decoration: none; color: black; font-weight: bold;" href="{% url 'newestbooks' %}">NEWEST BOOKS</a>
+    <div class="box-element" style="outline-color: rgba(10, 52, 58, 0.508); outline-style: solid;
+    box-shadow: 0 9px 25px hsla(0, 0%, 100%, 0.574); border-radius: 25px;">
+      <a style="border-radius: 14px; background-color: rgb(255, 255, 255); display: block; text-align: center; text-decoration: none; color: black; font-weight: bold;" href="{% url 'newestbooks' %}">NEWEST BOOKS</a>
     </div>
   </div>
   <div class="col-lg-4" >
-    <div class="box-element">
-      <a style="display: block; text-align: center; text-decoration: none; color: black; font-weight: bold;" href="{% url 'booksunder' %}">BOOKS UNDER $10</a>
+    <div class="box-element" style="outline-color: rgba(10, 52, 58, 0.508); outline-style: solid;
+    box-shadow: 0 9px 25px hsla(0, 0%, 100%, 0.574); border-radius: 25px;">
+      <a style="border-radius: 17px; background-color: rgb(255, 255, 255); display: block; text-align: center; text-decoration: none; color: black; font-weight: bold;" href="{% url 'booksunder' %}">BOOKS UNDER $10</a>
     </div>
   </div>
     
   <div class="col-lg-4">
-    <div class="box-element">
-      <a style="display: block; text-align: center; text-decoration: none; color: black; font-weight: bold;" href="{% url 'randombooks' %}">RANDOM BOOKS</a>
+    <div class="box-element" style="outline-color: rgba(10, 52, 58, 0.508); outline-style: solid;
+    box-shadow: 0 9px 25px hsla(0, 0%, 100%, 0.574); border-radius: 25px;">
+      <a style=" background-color: rgb(255, 255, 255); display: block; text-align: center; text-decoration: none; color: black; font-weight: bold;" href="{% url 'randombooks' %}">RANDOM BOOKS</a>
     </div>
   </div>
-  <br></br>
-  <br></br>
+</div>
+</div>
 </div>
 
 {% endblock %}
