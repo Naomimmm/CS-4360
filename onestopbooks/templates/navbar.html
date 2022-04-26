@@ -38,7 +38,7 @@
             <a href="{% url 'cart' %}">
                <img  id="cart-icon" src="{% static 'images/shopping-cart.svg' %}">
            </a>
-           <p id="cart-count">0</p>
+           <p id="cart-count">{{buy.get_cart_items}}</p>
        </div>
     </div>
     <span class="hello-msg"style="font-weight: bold;">&nbsp; Hello, {{request.user}} </span>
