@@ -33,14 +33,22 @@
         </form>
         </div>
         <div>
+          {% if user.is_authenticated%}
+
+          {% else %}
             <a href="{% url 'login' %}"class="btn btn-primary">Login</a>
             <a href="{% url 'signup' %}"class="btn btn-warning">Sign-Up</a>
             <a href="{% url 'cart' %}">
+          {% endif %}
                <img  id="cart-icon" src="{% static 'images/shopping-cart.svg' %}">
            </a>
            <p id="cart-count">{{buy.get_cart_items}}</p>
        </div>
     </div>
     <span class="hello-msg"style="color: white;">&nbsp; Hello, {{request.user}} </span>
-    <span >&nbsp;&nbsp;<a href="{% url 'logout' %}"class="btn btn-secondary">Logout</a></span>
+    {% if user.is_authenticated%}
+      <span >&nbsp;&nbsp;<a href="{% url 'logout' %}"class="btn btn-secondary">Logout</a></span>
+    {% else %}
+      
+    {% endif %}
   </nav>
