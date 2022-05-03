@@ -16,6 +16,7 @@ SUCCESS_CHECKOUT_HTML = "checkout-success.html"
 
 # Create your views here.
 def home_view(request, *args, **kwargs):
+    """ Function to return home page """
     if request.user.is_authenticated:
         customer = request.user.customer
         buy, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
@@ -29,6 +30,7 @@ def home_view(request, *args, **kwargs):
 
 
 def successcheckout_view(request, *args, **kwargs):
+    """ Function to display successful order message after checkout """
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
@@ -45,6 +47,7 @@ def successcheckout_view(request, *args, **kwargs):
 
 
 def randombooks_view(request, *args, **kwargs):
+    """ Function to return 20 random books """
     items = list(Book.objects.all())
     random_items = random.sample(items, 20)
 
@@ -52,6 +55,7 @@ def randombooks_view(request, *args, **kwargs):
 
 
 def booksunder_view(request, *args, **kwargs):
+    """ Function to return book under $10 """
     items_under = Book.objects.filter(price__range=(0, 9))
     items_under_sorted = items_under.order_by('price')
 
@@ -59,12 +63,14 @@ def booksunder_view(request, *args, **kwargs):
 
 
 def newestbooks_view(request, *args, **kwargs):
+    """ Function to return 20 newest book """
     items_num = len(Book.objects.all())
     last_twenty = Book.objects.filter().order_by()[items_num-20:]
 
     return render(request, GENRE_PRODUCTS_HTML, {'books': last_twenty})
 
 def books_view(request, *args, **kwargs):
+    """ Function to return all of our books and also book filter """
     if request.user.is_authenticated:
         customer = request.user.customer
         buy, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
@@ -93,6 +99,7 @@ def books_view(request, *args, **kwargs):
     return render(request, "products.html", context)
 
 def aboutus_view(request, *args, **kwargs):
+    """ Return about us page """
     if request.user.is_authenticated:
         customer = request.user.customer
         buy, created = Order.objects.get_or_create(customer = customer, complete=False) # create object or quere one, if object isnt exist then we will create it
@@ -104,6 +111,7 @@ def aboutus_view(request, *args, **kwargs):
     return render(request, "aboutus.html", context)
 
 def checkout_view(request, *args, **kwargs):
+    """ Return checkout page """
     # check if user is authenticated
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -117,6 +125,7 @@ def checkout_view(request, *args, **kwargs):
     return render(request, "checkout.html", context)
 
 def cart_view(request, *args, **kwargs):
+    """ Return cart page with 3 sections BUY and Rent and Total """
     # check if user is authenticated
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -133,6 +142,7 @@ def cart_view(request, *args, **kwargs):
     return render(request, "cart.html", context)
     
 def loginPage(request):
+    """ For Return Customer to login to web page """
     if request.user.is_authenticated:
         return redirect('home')
     else:
@@ -150,6 +160,7 @@ def loginPage(request):
        return render(request,'login.html',context)
 
 def signupPage(request):
+    """ For new user to register an account """
     if request.user.is_authenticated:
         return redirect('home') 
     else: 
@@ -171,10 +182,12 @@ def signupPage(request):
         return render(request,'signup.html',context)
 
 def logoutPage(request):
+    """ Logout and return to homepage """
     logout(request)
     return redirect('/')
 
 def product_view(request, isbn):
+    """ Return invididual page for a book with book details """
     book = Book.objects.get(isbn = isbn)
     reviews = ReviewRating.objects.filter(book_id = book.isbn)
     context = {
@@ -184,6 +197,7 @@ def product_view(request, isbn):
     return render(request, "product.html", context)
 
 def update_item(request):
+    """ Function to add book to Cart to Buy or Rent section depending on which button clicked """
     data = json.loads(request.body)
     book_isbn = data['bookIsbn']
     action = data['action']
@@ -223,6 +237,7 @@ def update_item(request):
     return JsonResponse('Item was added', safe=False)
 
 def search_results(request):
+    """ Function to return search result for books """
     if request.method == "POST":
         results = request.POST['searched']
         books = Book.objects.filter(Q(title__contains = results) | Q(isbn__contains = results) | Q(authors__contains = results) | Q(year_public__contains = results) | Q(publisher__contains = results))
