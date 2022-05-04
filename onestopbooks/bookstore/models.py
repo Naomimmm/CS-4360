@@ -73,6 +73,7 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=200, null=True) # add some extra info to order
     
     def __str__(self):
+        """ Function to get total price for items in cart """
         return str(self.id)
     @property
     # get total price for cart
@@ -83,6 +84,7 @@ class Order(models.Model):
 
     @property
     def get_cart_items(self):
+        """ Function to get total items in cart """
         orderitems = self.orderitem_set.all()
         rentitems = self.rentitem_set.all()
         totalbuy = sum([item.quantity for item in orderitems])
@@ -100,6 +102,7 @@ class OrderItem(models.Model):
     @property
     # get total prices in cart for that book
     def get_total(self):
+        """ Function to get total price for purchse book """
         total = self.product.price * self.quantity
         return total
     
@@ -122,4 +125,5 @@ class ReviewRating(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
+        """ In Admin Page, Display Book Titlte and Username for that Review """
         return str(self.book.title + self.user.username)
