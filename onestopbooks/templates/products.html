@@ -19,7 +19,7 @@
         </div>
     </h2>
     <div class="row">
-        {% for book in books %}
+        {% for book in book_page %}
         <div class="col-lg-3 text-center product-box">
             <img class="thumbnail img-thumbnail center-block" src="{{book.thumbnail_pic.url}}">
             <br><br>
@@ -35,8 +35,25 @@
         {% endfor %}
     </div>
     <br></br>
-
-    <a href="#" class="prev" style="  padding: 8px 16px;border-radius: 50%;">&laquo; Previous</a>
-    <a href="#" class="next" style="float: right; padding: 8px 16px;border-radius: 50%;">Next &raquo;</a> 
+    
 </div>
+
+<br/>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+{% if book_page.has_previous %}
+    <li class="page-item"><a class="page-link" href = "?page=1">&laquo First </a></li>
+    <li class="page-item"><a class="page-link" href = "?page= {{book_page.previous_page_number}}">Previous</a></li>    
+{% endif %}
+
+<li class="page-item disabled"><a href = "#" class="page-link">Page {{ book_page.number }} of {{ book_page.paginator.num_pages }}</a></li>
+
+{% if book_page.has_next %}
+<li class="page-item"><a class="page-link" href = "?page={{book_page.next_page_number}} ">Next </a></li>
+<li class="page-item"><a class="page-link" href = "?page={{book_page.paginator.num_pages}}">Last &raquo </a></li>
+{% endif %}
+    </ul>
+</nav>
+</br>
+
 {% endblock %}

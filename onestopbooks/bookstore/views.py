@@ -9,6 +9,7 @@ from django.http import JsonResponse
 import json
 from django.contrib import messages
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 GENRE_PRODUCTS_HTML = "genre-products.html"
 SUCCESS_CHECKOUT_HTML = "checkout-success.html"
@@ -93,8 +94,11 @@ def books_view(request, *args, **kwargs):
         books = Book.objects.all().order_by('-price')
     else:
         books = Book.objects.all()
-        
-    context = {'items':items, 'buy':buy, 'books':books}
+        # Set up Pagination for book page
+        p = Paginator(Book.objects.all(), 20)
+        page = request.GET.get('page')
+        book_page = p.get_page(page)        
+    context = {'items':items, 'buy':buy, 'books':books, 'book_page':book_page}
 
     return render(request, "products.html", context)
 
