@@ -269,4 +269,5 @@ def submit_review(request, book_isbn):
             data.book_id = book_isbn
             data.user_id = request.user.id
             data.save()
+            messages.success(request, 'Thank you! Your review has been submitted')
             return redirect(url)
