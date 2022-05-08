@@ -85,11 +85,9 @@ def books_view(request, *args, **kwargs):
     books = Book.objects.all()
     p = Paginator(Book.objects.all(), 20)
     page = request.GET.get('page')
-    book_page = p.get_page(page) 
-    if results == 'featured':
-        p = Paginator(Book.objects.all(), 20)        
+    book_page = p.get_page(page)   
         
-    elif results == 'titles_az':
+    if results == 'titles_az':
         p = Paginator(Book.objects.all().order_by('title'), 20)
         book_page = p.get_page(page) 
         
@@ -104,9 +102,7 @@ def books_view(request, *args, **kwargs):
     elif results == 'price_hl':
         p = Paginator(Book.objects.all().order_by('-price'), 20)
         book_page = p.get_page(page) 
-        
-    else:        
-        p = Paginator(Book.objects.all(), 20)       
+      
     context = {'items':items, 'buy':buy, 'books':books, 'book_page':book_page}
 
     return render(request, "products.html", context)
