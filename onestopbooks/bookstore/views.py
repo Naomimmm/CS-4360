@@ -81,19 +81,34 @@ def books_view(request, *args, **kwargs):
         buy = {'get_cart_total':0, 'get_cart_items':0}
     
     results = request.POST.get('book-filterd')
+    books = Book.objects.all()
     
     if results == 'featured':
-        books = Book.objects.all()
+        p = Paginator(Book.objects.all(), 20)
+        page = request.GET.get('page')
+        book_page = p.get_page(page) 
+        
     elif results == 'titles_az':
-        books = Book.objects.all().order_by('title')
+        p = Paginator(Book.objects.all().order_by('title'), 20)
+        page = request.GET.get('page')
+        book_page = p.get_page(page) 
+        
     elif results == 'authors_az':
-        books = Book.objects.all().order_by('authors')
+        p = Paginator(Book.objects.all().order_by('authors'), 20)
+        page = request.GET.get('page')
+        book_page = p.get_page(page) 
+        
     elif results == 'price_lh':
-        books = Book.objects.all().order_by('price')
+        p = Paginator(Book.objects.all().order_by('price'), 20)
+        page = request.GET.get('page')
+        book_page = p.get_page(page) 
+        
     elif results == 'price_hl':
-        books = Book.objects.all().order_by('-price')
-    else:
-        books = Book.objects.all()
+        p = Paginator(Book.objects.all().order_by('-price'), 20)
+        page = request.GET.get('page')
+        book_page = p.get_page(page) 
+        
+    else:        
         # Set up Pagination for book page
         p = Paginator(Book.objects.all(), 20)
         page = request.GET.get('page')
