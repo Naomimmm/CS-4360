@@ -81,23 +81,26 @@ def books_view(request, *args, **kwargs):
         buy = {'get_cart_total':0, 'get_cart_items':0}
     
     results = request.POST.get('book-filterd')
-    
-    if results == 'featured':
-        books = Book.objects.all()
-    elif results == 'titles_az':
-        books = Book.objects.all().order_by('title')
+    books = Book.objects.all()
+    p = Paginator(Book.objects.all(), 20)
+    page = request.GET.get('page')
+    book_page = p.get_page(page)   
+        
+    if results == 'titles_az':
+        p = Paginator(Book.objects.all().order_by('title'), 20)
+        book_page = p.get_page(page) 
+        
     elif results == 'authors_az':
-        books = Book.objects.all().order_by('authors')
+        p = Paginator(Book.objects.all().order_by('authors'), 20)
+        book_page = p.get_page(page) 
+        
     elif results == 'price_lh':
-        books = Book.objects.all().order_by('price')
+        p = Paginator(Book.objects.all().order_by('price'), 20)
+        book_page = p.get_page(page) 
+        
     elif results == 'price_hl':
-        books = Book.objects.all().order_by('-price')
-    else:
-        books = Book.objects.all()
-        # Set up Pagination for book page
-        p = Paginator(Book.objects.all(), 20)
-        page = request.GET.get('page')
-        book_page = p.get_page(page)        
+        p = Paginator(Book.objects.all().order_by('-price'), 20)
+        book_page = p.get_page(page)       
     context = {'items':items, 'buy':buy, 'books':books, 'book_page':book_page}
 
     return render(request, "products.html", context)
