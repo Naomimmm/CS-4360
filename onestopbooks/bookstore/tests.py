@@ -556,12 +556,12 @@ class ViewsTestCase(TestCase):
             'username' : 'testuser',
             'password' : 'testpass'
         }
-
+        
         User.objects.create_user(**self.credentials)
 
         self.test_user = User.objects.get(username="testuser")
         self.assertIsNotNone(self.test_user)
-
+        
         Book.objects.create(
             isbn = "195153448",
             title = "Classical Mythology",
@@ -571,9 +571,9 @@ class ViewsTestCase(TestCase):
             thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
             quantity = 10,
             price = 10)
-
+        
         self.test_book = Book.objects.get(isbn="195153448")
-
+        
         Book.objects.create(
             isbn = "771074670",
             title = "Nights Below Station Street",
@@ -583,7 +583,7 @@ class ViewsTestCase(TestCase):
             thumbnail_pic = "http://images.amazon.com/images/P/0771074670.01.MZZZZZZZ.jpg",
             quantity = 10,
             price = 10)
-
+        
         self.test_book_2 = Book.objects.get(isbn="771074670")
         
         Customer.objects.create(
@@ -595,89 +595,233 @@ class ViewsTestCase(TestCase):
             city = "Denver",
             state = "Colorado",
             zip_code = "80123")
-
+        
         self.test_customer = Customer.objects.get(first_name="Amy")
-
+        
         Order.objects.create(
             customer = self.test_customer,
             complete = "False",
             transaction_id = "1")
-
+        
         self.test_order = Order.objects.get(customer=self.test_customer)
-
+        
         OrderItem.objects.create(
             product = self.test_book,
             order = self.test_order,
             quantity = 4)
-
+        
         RentItem.objects.create(
             product1 = self.test_book_2,
             order1 = self.test_order,
             quantity1 = 1)
 
+    def create_n_books(self, n):
+        for i in range(n):
+            Book.objects.create(
+                isbn = "19515345" + str(i),
+                title = "Book" + str(i),
+                authors = "Test book author",
+                year_public = "2002",
+                publisher = "Oxford University Press",
+                thumbnail_pic = "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg",
+                quantity = 10,
+                price = 10)
+    
     def test_home_view(self):
         response = self.client.get('')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'home.html')
-
-    def test_books_view(self):
+    
+    def test_books_view_authenticated(self):
+        self.client.post('/login/', self.credentials)
+        response = self.client.get('/books/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'products.html')
+    
+    def test_books_view_authenticated_featured(self):
+        self.client.post('/login/', self.credentials)
+        response = self.client.post('/books/', {'book-filterd' : 'featured'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'products.html')
+    
+    def test_books_view_authenticated_titles_az(self):
+        self.client.post('/login/', self.credentials)
+        response = self.client.post('/books/', {'book-filterd' : 'titles_az'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'products.html')
+    
+    def test_books_view_authenticated_title(self):
+        self.client.post('/login/', self.credentials)
+        response = self.client.post('/books/', {'book-filterd' : 'title'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'products.html')
+    
+    def test_books_view_authenticated_authors(self):
+        self.client.post('/login/', self.credentials)
+        response = self.client.post('/books/', {'book-filterd' : 'authors'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'products.html')
+    
+    def test_books_view_authenticated_price(self):
+        self.client.post('/login/', self.credentials)
+        response = self.client.post('/books/', {'book-filterd' : 'price'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'products.html')
+    
+    def test_books_view_authenticated_dash_price(self):
+        self.client.post('/login/', self.credentials)
+        response = self.client.post('/books/', {'book-filterd' : '-price'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'products.html')
+    
+    def test_books_view_unauthenticated(self):
         response = self.client.get('/books/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'products.html')
         
-    def test_aboutus_view(self):
+    def test_aboutus_view_authenticated(self):
+        self.client.post('/login/', self.credentials)
         response = self.client.get('/aboutus/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'aboutus.html')
-
-    def test_checkout_view(self):
+    
+    def test_aboutus_view_unauthenticated(self):
+        response = self.client.get('/aboutus/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'aboutus.html')
+    
+    def test_checkout_view_authenticated(self):
+        self.client.post('/login/', self.credentials)
         response = self.client.get('/checkout/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'checkout.html')
-
-    def test_cart_view(self):
+    
+    def test_checkout_view_unauthenticated(self):
+        response = self.client.get('/checkout/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'checkout.html')
+   
+    def test_cart_view_authenticated(self):
+        self.client.post('/login/', self.credentials)
         response = self.client.get('/cart/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'cart.html')
-
+    
+    def test_cart_view_unauthenticated(self):
+        response = self.client.get('/cart/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'cart.html')
+    
     def test_loginPage(self):
         response = self.client.post('/login/', self.credentials, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['user'].is_active)
         self.assertTemplateUsed(response, 'home.html')
-
+    
+    def test_loginPage_already_authenticated(self):
+        self.client.post('/login/', self.credentials)
+        response = self.client.post('/login/', self.credentials, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['user'].is_active)
+        self.assertTemplateUsed(response, 'home.html')
+    
+    def test_loginPage_invalid_credentials(self):        
+        response = self.client.post('/login/', None, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['user'].is_active)
+        self.assertTemplateUsed(response, 'login.html')
+    
     def test_signupPage(self):
+        form_values = {
+            'username' : 'testuser',
+            'password1' : 'testpass',
+            'password2' : 'testpass',
+            'first_name' : 'test',
+            'last_name' : 'user',
+            'email' : 'test@user.com',
+            'address_1' : 'test',
+            'city' : 'test',
+            'state' : 'test',
+            'zip_code' : '12345'
+        }
+        response = self.client.post('/signup/', form_values)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'signup.html')
+    
+    def test_signupPage_get_request(self):
         response = self.client.get('/signup/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'signup.html')
-
+    
+    def test_signupPage_already_authenticated(self):
+        self.client.post('/login/', self.credentials)
+        response = self.client.get('/signup/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['user'].is_active)
+        self.assertTemplateUsed(response, 'home.html')
+    
     def test_logoutPage(self):
         response = self.client.get('/logout/')
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/')
-
+    
     def test_product_view_valid_book(self):
         response = self.client.get('/product/195153448')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'product.html')
-
+    
     def test_successcheckout_view_Not_Authenticated(self):
         response = self.client.get('/successcheckout/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'checkout-success.html')
-
+    
     def test_successcheckout_view_Authenticated_Purchase_Book(self):
         self.client.post('/login/', self.credentials)
-
+        
         response = self.client.get('/successcheckout/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'checkout-success.html')
-
+        
         test_book = Book.objects.get(isbn="195153448")
         test_book_2 = Book.objects.get(isbn="771074670")
         
         self.assertEqual(6, test_book.quantity)
         self.assertEqual(9, test_book_2.quantity)
+    
+    def test_randombooks_view(self):
+        self.create_n_books(20)
+        response = self.client.get('/randombooks/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'genre-products.html')
+    
+    def test_booksunder_view(self):
+        response = self.client.get('/booksunder/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'genre-products.html')
+    
+    def test_newestbook_view(self):
+        self.create_n_books(20)
+        response = self.client.get('/newestbooks/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'genre-products.html')
+    
+    def test_searched_view(self):
+        response = self.client.post('/bookstore/search', {'searched': 'test'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'search.html')
+    
+    def test_searched_view_get_request(self):
+        response = self.client.get('/bookstore/search')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'search.html')
+    
+    def test_submit_review(self):
+        self.client.post('/login/', self.credentials)
+        header = {'HTTP_REFERER': '/product/195153448'}
+        review = {'rate': '5', 'subject': 'test', 'review': 'test'}
+        response = self.client.post('/submit_review/195153448', review, **header, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'product.html')
 
 class ReviewRatingTestCase(TestCase):
     """ Test case for Review and Rating Models """
