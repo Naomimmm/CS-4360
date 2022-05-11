@@ -61,6 +61,7 @@
                     </div>
                 </div>
                 <hr>
+                <input class="btn btn-success" href="{% url 'home' %}" type = 'submit' value="Continue">
                 <br>
             </form>
         </div>
@@ -102,6 +103,7 @@
             {% endfor %}
             <h5>Items:   {{order.get_cart_items}}</h5>
             <h5>Total:   ${{order.get_cart_total|floatformat:2}}</h5>
+            
             <a  class="btn btn-outline-dark" href="{% url 'cart' %}" style="margin-top: 20px">&#x2190; Back to Cart</a>
         </div>
     </div>
