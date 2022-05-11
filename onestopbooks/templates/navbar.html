@@ -32,21 +32,20 @@
           <button class="btn btn-danger" type="submit">Search</button>
         </form>
         </div>
+        <span class="hello-msg"style="color: white;">&nbsp; Hello, {{request.user}} </span> &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'cart' %}"><img src="{% static 'images/shopping-cart.svg' %}" style="margin-top: 7px;"></a>
+        <p id="cart-count">{{buy.get_cart_items}}</p>
         <div>
           {% if user.is_authenticated%}
-
+          <a href="{% url 'cart' %}">
           {% else %}
+          &nbsp;&nbsp;
             <a href="{% url 'login' %}"class="btn btn-primary">Login</a>
-            <a href="{% url 'signup' %}"class="btn btn-warning">Sign-Up</a>
-            <a href="{% url 'cart' %}">
+            <!-- <a href="{% url 'signup' %}"class="btn btn-warning">Sign-Up</a> -->
           {% endif %}
-               <img  id="cart-icon" src="{% static 'images/shopping-cart.svg' %}">
-           </a>
-           <p id="cart-count">{{buy.get_cart_items}}</p>
        </div>
     </div>
-    <span class="hello-msg"style="color: white;">&nbsp; Hello, {{request.user}} </span>
-    {% if user.is_authenticated%}
+    {% if user.is_authenticated%}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span >&nbsp;&nbsp;<a href="{% url 'logout' %}"class="btn btn-secondary">Logout</a></span>
     {% else %}
       
